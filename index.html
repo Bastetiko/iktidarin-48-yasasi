@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İktidarın 48 Yasası · İş Yeri Senaryoları</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#100D08;--surface:#1C1814;--border:rgba(201,166,89,0.14);--border-hi:rgba(201,166,89,0.32);--text:#ECE2CE;--text-dim:#A39377;--text-mute:#6B6149;--gold:#C9A659;--gold-dim:#8A7340;--rust:#C56A3A;--moss:#7CA56A;--blue:#7FA8C9;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Karla',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(201,166,89,0.08),transparent 60%),radial-gradient(ellipse 60% 40% at 90% 100%,rgba(197,106,58,0.04),transparent 60%);background-attachment:fixed}
+::selection{background:rgba(201,166,89,0.3);color:var(--text)}
+.hero{max-width:920px;margin:0 auto;padding:80px 28px 40px;text-align:center}
+.hero-eyebrow{font-size:12px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;font-weight:500}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(46px,8vw,88px);line-height:0.95;letter-spacing:-0.01em;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--gold);font-weight:400}
+.hero-sub{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.2vw,21px);color:var(--text-dim);max-width:580px;margin:0 auto 32px;line-height:1.5}
+.hero-ornament{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold-dim);margin-top:40px}
+.hero-ornament .line{height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.toolbar-wrap{position:sticky;top:0;z-index:50;background:rgba(16,13,8,0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);margin-top:24px}
+.toolbar{max-width:920px;margin:0 auto;padding:18px 28px}
+.search-wrap{position:relative;margin-bottom:14px}
+.search-wrap .ti-search{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-mute);font-size:18px;pointer-events:none}
+#search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px 44px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:border-color 0.2s}
+#search::placeholder{color:var(--text-mute)}
+#search:focus{border-color:var(--gold-dim)}
+.clear-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-mute);cursor:pointer;font-size:20px;padding:4px;display:none;line-height:1}
+.clear-btn.show{display:block}
+.clear-btn:hover{color:var(--text)}
+.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:var(--sans);font-size:12px;letter-spacing:0.05em;text-transform:uppercase;padding:6px 14px;border-radius:2px;cursor:pointer;transition:all 0.18s;font-weight:500}
+.chip:hover{color:var(--text);border-color:var(--border-hi)}
+.chip.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.counter{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--text-mute);white-space:nowrap}
+.laws{max-width:920px;margin:0 auto;padding:32px 28px 120px}
+.law{border-bottom:1px solid var(--border);transition:background 0.18s}
+.law:first-child{border-top:1px solid var(--border)}
+.law-head{display:grid;grid-template-columns:80px 1fr auto;gap:20px;padding:28px 8px;cursor:pointer;align-items:baseline;transition:background 0.2s}
+.law-head:hover{background:rgba(201,166,89,0.03)}
+.law-numeral{font-family:var(--serif);font-style:italic;font-weight:400;font-size:32px;color:var(--gold);line-height:1;letter-spacing:0.02em}
+.law-meta{min-width:0}
+.law-title{font-family:var(--serif);font-weight:500;font-size:clamp(22px,3vw,28px);line-height:1.15;letter-spacing:-0.005em;color:var(--text);margin-bottom:8px}
+.law-ozet{font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.45;color:var(--text-dim)}
+.law-toggle{font-size:22px;color:var(--text-mute);align-self:center;transition:transform 0.3s,color 0.2s;margin-top:6px;font-weight:300;line-height:1}
+.law.open .law-toggle{transform:rotate(45deg);color:var(--gold)}
+.law.open{background:linear-gradient(180deg,transparent,rgba(201,166,89,0.025))}
+.law-body{max-height:0;overflow:hidden;transition:max-height 0.5s ease}
+.law.open .law-body{max-height:6000px}
+.law-body-inner{padding:0 8px 44px 100px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:0.12em;padding:4px 10px;border-radius:2px;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-weight:500}
+.senaryo-block{margin-bottom:36px}
+.section-heading{font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.section-heading::before{content:'';display:block;width:22px;height:1px;background:var(--gold-dim)}
+.senaryo-text{font-family:var(--serif);font-size:19px;line-height:1.65;color:var(--text);font-weight:400}
+.senaryo-text::first-letter{font-size:1.45em;color:var(--gold);font-weight:500}
+.cevap-block{border-top:1px dashed var(--border);padding-top:32px}
+.cevap-grid{display:grid;gap:22px}
+.cevap-item{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:baseline}
+.cevap-label{font-family:var(--sans);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;line-height:1.4;padding-top:3px}
+.lbl-yasalar{color:var(--gold)}
+.lbl-yuzey{color:var(--blue)}
+.lbl-kritik{color:var(--rust)}
+.lbl-simdi{color:var(--moss)}
+.cevap-text{font-family:var(--sans);font-size:15.5px;line-height:1.7;color:var(--text)}
+.cevap-text em.quote{font-family:var(--serif);font-style:italic;color:var(--gold);display:block;padding:8px 0 8px 16px;border-left:2px solid var(--gold-dim);margin:10px 0;font-size:17px;line-height:1.5}
+.empty{text-align:center;padding:80px 28px;color:var(--text-mute);font-family:var(--serif);font-style:italic;font-size:18px;display:none}
+.empty.show{display:block}
+footer{max-width:920px;margin:40px auto 0;padding:40px 28px 60px;text-align:center;border-top:1px solid var(--border);color:var(--text-mute);font-family:var(--serif);font-style:italic;font-size:14px}
+footer .ornament{color:var(--gold-dim);margin-bottom:16px;font-size:18px}
+.ti{display:inline-block;font-style:normal}
+.ti-search::before{content:'⌕'}
+.ti-x::before{content:'×'}
+@media(max-width:680px){.hero{padding:56px 20px 30px}.toolbar{padding:14px 20px}.laws{padding:24px 20px 80px}.law-head{grid-template-columns:48px 1fr 20px;gap:14px;padding:22px 4px}.law-numeral{font-size:22px}.law-title{font-size:19px}.law-ozet{font-size:14px}.law-body-inner{padding:0 4px 32px 62px}.senaryo-text{font-size:17px}.cevap-item{grid-template-columns:1fr;gap:6px}.cevap-label{padding-top:0}.cevap-text{font-size:14.5px}.filters{flex-direction:column;align-items:flex-start}.counter{align-self:flex-end}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp 0.7s ease both}
+.hero-eyebrow{animation-delay:0.05s}
+.hero h1{animation-delay:0.15s}
+.hero-sub{animation-delay:0.3s}
+.hero-ornament{animation-delay:0.45s}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="hero-eyebrow">Robert Greene · 1998</div>
+  <h1>İktidarın <em>48 Yasası</em></h1>
+  <p class="hero-sub">İş yeri için 48 hikâye, 48 katmanlı analiz. Patron: Alihan. Kahraman: sen.</p>
+  <div class="hero-ornament"><span class="line"></span><span class="diamond"></span><span class="line"></span></div>
+</section>
+<div class="toolbar-wrap"><div class="toolbar">
+  <div class="search-wrap">
+    <span class="ti ti-search"></span>
+    <input id="search" type="text" placeholder="Ara: Murat, terfi, sunum, itibar, zamanlama..." autocomplete="off" />
+    <button class="clear-btn" id="clear" aria-label="Temizle"><span class="ti ti-x"></span></button>
+  </div>
+  <div class="filters">
+    <div class="chips">
+      <button class="chip active" data-filter="all">Tümü</button>
+      <button class="chip" data-filter="atak">Atak</button>
+      <button class="chip" data-filter="savunma">Savunma</button>
+      <button class="chip" data-filter="algi">Algı</button>
+      <button class="chip" data-filter="iletisim">İletişim</button>
+    </div>
+    <div class="counter" id="counter">48 yasa</div>
+  </div>
+</div></div>
+<main class="laws" id="list"></main>
+<div class="empty" id="empty">Eşleşen yasa bulunamadı.</div>
+<footer>
+  <div class="ornament">✦</div>
+  <div>Robert Greene · The 48 Laws of Power</div>
+  <div style="margin-top:6px;font-size:12px;color:var(--text-mute);font-style:normal;letter-spacing:0.08em;">İŞ YERİ UYARLAMASI</div>
+</footer>
+<script>
+const ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI','XXII','XXIII','XXIV','XXV','XXVI','XXVII','XXVIII','XXIX','XXX','XXXI','XXXII','XXXIII','XXXIV','XXXV','XXXVI','XXXVII','XXXVIII','XXXIX','XL','XLI','XLII','XLIII','XLIV','XLV','XLVI','XLVII','XLVIII'];
+const Q=s=>`<em class="quote">${s}</em>`;
+const LAWS=[
+{n:1,t:"Ustanı asla gölgede bırakma",c:["savunma"],o:"Üstlerinden parlak görünmek sessiz düşman üretir.",
+senaryo:`Aylık Genel Müdürlük raporu toplantısında Alihan'ın yanındasın. Ege bölgesi siparişlerinin %38 düştüğünü ve rakibe kaydığını fark ettin. Toplantıda Türkiye Genel Müdürü sebebi sordu, Alihan yanıt veremedi. Sen araya girdin: "Aslında ben inceledim patronum, rakip Ege bayilerini yeni komisyon yapısıyla aldı, veriyi paylaşabilirim." Genel Müdür sana döndü: "Aferin, bu tip insanları kollayın Alihan Bey." Bir hafta sonra Alihan sana üç aylık 'süreç optimizasyonu' görevi verdi — üst yönetime sunum yapılan toplantıların dışında.`,
+yasalar:"Yasa 1 doğrudan ihlal. Yasa 5 (itibar) — Alihan'ın itibarı senin parlamanla yara aldı; telafi etmek zorunda kaldı, en kolay yol seni sahneden çekmek.",
+yuzey:"Yüzeyde 'kıymetli analist'. Altta Alihan'ın yetersizliğinin canlı tanığı oldun; Genel Müdür'ün iltifatı 'Ramazan benim üstüme çıktı' mesajı taşıdı.",
+kritik:"Ege verisini Genel Müdür'ün önünde sen söylediğin an. Bu bilgiyi toplantı öncesi Alihan'a vermeliydin; o sunmalıydı, sen yanında oturmalıydın.",
+simdi:`Sıradaki büyük gözlemi mutlaka önce Alihan'a sun. ${Q("Patronum, bir noktayı netleştirdim, sizinle önce ayrıca konuşmak istedim — kararınızı bekliyorum.")}Birkaç ay dikkati ona kaydır, "patronum yönlendirdi" çerçevesi kullan. Statüyü iade etmeden kapı yeniden açılmaz.`},
+{n:2,t:"Dostlara fazla güvenme, düşmanları kullanmayı öğren",c:["iletisim"],o:"Dostlar kıskanır; eski rakipler kendini her gün ispatlar.",
+senaryo:`Departmana iki asistan alınacak; Alihan'a iki isim önerdin: üniversiteden eski arkadaşın Burak ve geçen sene bir projede sana sert eleştirilerde bulunmuş Ezgi. İkisi de geldi. Üç ay sonra Burak öğle yemeklerinde "biz arkadaşız ya, şu raporu sen yazsan?" diyerek sürekli senin zamanından çalıyor. Ezgi sabah 7:45'te masada, her görevi bir gün önceden bitiriyor. Alihan toplantıda: "Ezgi, ekibe çok yakıştın." Aynı akşam Burak Slack'te sana: "Ramazan, ben başka bir yere bakınsam mı?"`,
+yasalar:"Yasa 2 ana. Yasa 13 (çıkara seslen) — Burak 'dostluk' çerçevesinde yardım ister; çıkar ortaklığı kuramazsın, sadece yük binmiş olur.",
+yuzey:"Yüzeyde 'arkadaşını kollayan iyi patron'. Altta duygusal yatırımın performansını aşağı çekiyor; hatırı kalmasın diye toleransın artıyor, ekibin geri kalanı bunu görüyor.",
+kritik:"Burak'ı ilk önerdiğin an. İş ilişkisini dostlukla harmanladın; o günden sonra eleştirmek de yöneltmek de pahalı oldu.",
+simdi:`Burak'a profesyonel sınır çiz: ${Q("Mesai içinde ben patronunum, dostluk akşamlara ait.")}Ezgi'yi sahiplenip geliştir — onun başarısı senin sayfana yazılır. Burak gitmek isterse engelleme, kolaylaştır.`},
+{n:3,t:"Niyetlerini gizle",c:["atak","savunma"],o:"Açık niyet hedeftir; gizli niyet uygulanır.",
+senaryo:`Şirkette Ege Bölge Müdürlüğü açılacak — sen bu pozisyonu istiyorsun. Kahve molalarında üç meslektaşına ayrı ayrı "aslında ben hep saha tarafına ilgi duydum, bölge işine geçsem keyifli olur" dedin. İki hafta sonra İK Direktörü Aslı Hanım'la Alihan'ın yan ofiste konuştuğunu duydun: "Ramazan'ı düşünüyoruz ama ekipten birkaç kişi saha tecrübesi olmadığını ima etti." Pozisyon kimseye 'istiyorum' demeyen Selin'e gitti — kimse onun aday olduğunu bile bilmiyordu.`,
+yasalar:"Yasa 3 ana. Yasa 4 (az konuş) — üç kişiye söylemen, üçü de potansiyel rakip ya da rakibe taşıyıcıydı; bilgi serbest dolaştığı an silaha dönüştü.",
+yuzey:"Yüzeyde 'samimi paylaşım, hedefini açıklamak'. Altta her dinleyici potansiyel rakip; senin niyetini Alihan'a 'henüz hazır değil' formatında ulaştırdılar.",
+kritik:`İlk "ben hep saha tarafına ilgi duydum" cümlesini söylediğin an. Niyeti açıkladığın anda hedefe dönüştün.`,
+simdi:`Niyetini içinde tut. Saha ziyaretleri, sertifikalar, satışla küçük temaslar — adımları sessizce at. İnsanlar ne istediğini değil, ne yaptığını görsünler. Bir sonraki fırsatta zaten hazır halde, sürpriz aday olarak ortaya çık.`},
+{n:4,t:"Gerekenden az konuş",c:["iletisim"],o:"Az konuşan otorite kurar; çok konuşan kendini ele verir.",
+senaryo:`Haftalık ekip toplantısında her gündem maddesinde fikir bildirme alışkanlığın var — ihracat, lojistik, müşteri iadeleri, hatta İK. Selin üç toplantı boyunca tek kelime etmedi. Dördüncü toplantıda yeni tedarikçi seçimi tartışılırken Selin tek cümle söyledi: "Patronum, bu tedarikçinin geçen sene ABD'de uyumluluk cezası aldığını biliyor muydunuz?" Toplantı durdu, karar değişti. Alihan o ayki değerlendirmede Selin'in notuna "krizde tetikte, isabetli" yazdı; senin notuna ise "her konuya katılıyor ama odağı dağınık" yazdı.`,
+yasalar:"Yasa 4 ana. Yasa 6 (dikkat çek) — çok konuşmak dikkat değil, gürültü; nitelik nicelikte boğulur.",
+yuzey:"Yüzeyde 'katılımcı meslektaş'. Altta her fikrin bir öncekinin etkisini siliyor; senin sözüne kimse 'yeni bilgi' olarak bakmıyor.",
+kritik:`Her toplantıya "söyleyecek bir şeyim var" baskısıyla girmen. Bilmediğin konuda da konuştun, otoriten dağıldı.`,
+simdi:`Önümüzdeki üç toplantıda sadece bir alanda konuş — en güçlü olduğun alan. Diğerlerinde not al, soru sor, görüş bildirme. İki hafta içinde "Ramazan konuşunca dinlenir" havası geri döner.`},
+{n:5,t:"Her şey itibarına bağlıdır, onu canın gibi koru",c:["savunma"],o:"Bir kez sarsılan itibar yıllar boyu peşinden gelir.",
+senaryo:`Ofis kahvesinde bir hafta önce eski iş yerinden bir hesap hatasını şakayla anlattın: "O zamanlar ne hatalar yapıyorduk ya, yanlış hesap yüzünden milyonluk bir fatura çıkmıştı." Üç gün sonra Alihan yanına geldi: "Ramazan, geçmişte bir hesap olayı varmış, biraz anlatır mısın?" Anlattın, şaka olduğunu söyledin — Alihan dinledi, başını salladı. O ay seni yeni bütçe revizyonu projesine almadı: "Detay işlerden seni biraz kurtarayım." Bir kahvedeki tek cümle, dört yıllık temiz performansı sildi.`,
+yasalar:"Yasa 5 ana. Yasa 14 (casus gibi) — masum görünen sohbet bir başkasının dosyasıdır; ofis sohbeti her zaman raporlanır.",
+yuzey:"Yüzeyde 'rahat, mütevazı çalışan'. Altta 'hata yapan biri' algısı; profesyonelde mütevazılık hızla şüpheye çevrilir.",
+kritik:"Hatayı şakayla anlattığın an. Kendi aleyhine bir bilgi sızdırdın, bedavaya.",
+simdi:`Kendi geçmiş hatalarını ofiste asla anma. Alihan zaten sorduysa: net, kısa açıkla ve "o günden bu yana çift kontrol sistemim var" ile hikâyeyi kapat. Yeni bir görünür başarı projesine sessizce başla — itibar geri inşası içerikle değil tekrarla olur.`},
+{n:6,t:"Dikkati her ne pahasına olursa olsun çek",c:["algi"],o:"Sıradanlık görünmezlikten beter; görünmeyen hatırlanmaz.",
+senaryo:`İki yıldır şirketin lojistik raporlarını sessizce hazırlıyorsun — hata yok, gecikme yok. Aynı dönemde Furkan tartışmalı bir 'yapay zekâ destekli müşteri sınıflandırma' projesi önerdi; teknik olarak yarım, ama heyecanla anlatıyor: "Patronum, bunu yaparsak sektörde ilk biz oluruz!" Proje üç ay sonra çöktü — ama bu üç ayda Furkan'ın adı her toplantıda geçti. Terfide Furkan 'Müdür Yardımcısı' oldu; sen 'çok değerli, devam etsin' yorumuyla aynı pozisyonda.`,
+yasalar:"Yasa 6 ana. Yasa 37 (etkileyici gösteri) — Furkan'ın içeriksiz projesi sahnelendiği için var oldu.",
+yuzey:"Yüzeyde 'güvenilir, sessiz çalışan'. Altta 'görünmeyen' — hatırlanmayan, terfide gündemde olmayan.",
+kritik:`"Sessiz çalış, eninde sonunda fark edilir" inancın. Bu varsayım piyasada işlemiyor.`,
+simdi:`Bir sonraki büyük raporuna basit bir 'önce/sonra' görseli ekle; Alihan'a "isterseniz toplantıda 5 dakika anlatabilirim" notu düş. İçeriğe güvenebilirsin, sahneye taşımazsan kimse görmez.`},
+{n:7,t:"Başkalarının emeğini kullan, krediyi sen al",c:["atak"],o:"Çerçeveyi değiştiren, emeği de krediyi de devralır.",
+senaryo:`İhracat departmanındasın. Murat Bey 5 yıldır kıdemli, Alihan'ın güveni. Toplantıda müşteri yazışmalarını otomatik kategorize eden bir Python scripti gösterdin — ekibin haftada 4 saatini kurtarıyor. Alihan ilgilendi: "Anlat bakayım." Sen anlatırken Murat araya girdi: "Aslında bunu ben de geçen sene düşünmüştüm patronum, ama müsait olmamıştı. Çok güzel, Ramazan iyi başlatmış, biz bunu birlikte geliştirelim." Alihan: "Aferin Murat, ekip ruhu işte budur." Murat kodu istedi, "patron sordu" dedi. Bir hafta sonra Alihan: "Murat, anlat bakalım gelinen noktayı."`,
+yasalar:"Yasa 7 ana. Yasa 1 — Murat'ın kıdem statüsü tehdit altına girdi, sahiplenerek telafi etti. Yasa 13 — 'ortaklık' çerçevesi minnet doğurmuyor, çünkü 'ortağız' sanılıyor.",
+yuzey:"Yüzeyde 'ekip ruhu, dayanışma'. Altta Murat senin yükselişini kademeli emiyor: ortak → kod sahibi → ana anlatıcı. Saldırı yok, çerçeve değişti.",
+kritik:`Murat araya girdiğinde sessiz kalman. O an şu cümle gerekiyordu: ${Q("Çok teşekkür ederim Murat Bey, sektör bilginizden faydalanmak isterim. Şu an çalışan versiyonu kısaca göstereyim, geliştirme için sizinle ayrıca oturalım.")}Statüyü iade ederken otoriteyi sende tutardı.`,
+simdi:`Yüzleşme yok. Sessizce bir sonraki katkıyı doğrudan Alihan'a sun, Murat'ı dahil etme. Mailleri arşivle, tarihli notlar tut. Murat kodu isterse: ${Q("Alihan Bey'e bir kez doğrudan sorayım, hangi formatta istediğini netleştirelim.")}Üçgeni patron-sen hattına indir.`},
+{n:8,t:"İnsanları sana gelmeye zorla",c:["atak"],o:"Başlatan kontrolü kaybeder; bekleten yönetir.",
+senaryo:`Üç haftadır bir İtalyan müşteriyi arıyorsun, mail atıyorsun, randevu istiyorsun — dönmüyorlar. "Belki bizi unuttular" diyerek İstanbul'a kadar gidip kaldığı otelde habersizce ziyaret ettin. Müşteri rahatsız oldu ama nezaketen kabul etti, 15 dakika konuştular, sözleşmeyi imzalamadılar — "düşünüp döneriz" dediler. Aynı hafta Selin başka bir müşteri için tam tersini yaptı: hiç peşine düşmedi. Müşteri iki hafta sonra Selin'i aradı: "Sizinle anlaşmamız konusunda hâlâ düşünüyoruz, biraz indirim olur mu?" Sözleşme %8 daha düşük fiyatla kapandı.`,
+yasalar:"Yasa 8 ana. Yasa 16 (yokluğu kullan) — sürekli aradığında değer kaybediyor, sustuğunda merak uyandırıyor.",
+yuzey:"Yüzeyde 'kararlı satıcı'. Altta zayıf pozisyon; peşine düşen pazarlık gücünü kaybeder.",
+kritik:"Üçüncü maildan sonra durmaman. Birinci geri dönüş olmadığında stratejini değiştirmeliydin.",
+simdi:`Müşteriye haftalarca temas etme. Bir tetikleyici hazırla — bir bayinin firmana geçmesi, sektörde fiyat hareketi, bir referansın seni anması — sonra tek bir kısa mail. Aciliyet sende değil, onda yaratılmalı.`},
+{n:9,t:"Eylemlerinle kazan, asla tartışmayla değil",c:["iletisim"],o:"İkna edilen içten direnir; gösterilen razı olur.",
+senaryo:`Gümrük belgelerindeki imza süreci 3 günü buluyor. Sen aylardır toplantılarda "patronum, dijital imzaya geçelim" diyorsun. Alihan'ın cevabı hep aynı: "Düşünelim, KEP entegrasyonu maliyetli." Selin hiç tartışmadı. İki haftalık bir pilot çalışmayla bir müşteri grubunda dijital imza kurdu, gümrük süresini 6 saate indirdi. Pazartesi tek slayt mail attı: "Patronum, geçen iki haftanın özeti — aynı yöntemi tüm hesaplara açmamızı öneririm." Alihan iki gün sonra: "Selin'in çalışmasını şirket geneline yayalım."`,
+yasalar:"Yasa 9 ana. Yasa 26 (elleri temiz tut) — Selin Alihan'ın bütçe direncini sessizce aştı, izini bırakmadan başarı sundu.",
+yuzey:"Yüzeyde 'rasyonel argüman dinlenir'. Altta tartıştığın her toplantı Alihan'ı savunmaya itiyor; savunmasını sertleştirirsin.",
+kritik:"Üçüncü reddeden sonra durmaman. Argümanı tekrarlamak inadı arttırır.",
+simdi:`Bir alanda küçük bir pilot yap — kimse istemese de, sen yap. Sonucu sayıyla göster. Argüman değil, kanıt sun. Alihan'a sözle değil, sonuçla geri dön.`},
+{n:10,t:"Bulaşma: Mutsuz ve şanssızlardan kaç",c:["savunma"],o:"Negatiflik bulaşıcıdır; yanındakinin talihi seninkini etkiler.",
+senaryo:`Aynı ofiste oturan Burak, Alihan'la iki kez sürtüştüğünden beri sürekli homurdanıyor: "Bu şirket beni hak etmiyor." Sen iki yıldır onun yanında oturuyorsun, öğle yemeklerini birlikte yiyorsunuz. Stajyer Furkan aralarınıza geldi, Burak'la kötümser sohbete daldı. Üç ay sonra Alihan İK'ya: "Furkan'ın motivasyonu düşük, sözleşmesini uzatmayalım." Aynı şey iki yıl önce sana da olmuştu — düşük performans puanı almıştın, çevrenin etkisi olduğunu o zaman fark edememiştin.`,
+yasalar:"Yasa 10 ana. Yasa 18 (kale kurma) tersinden — yanlış grupla görünür olmak izole olmaktan da tehlikeli.",
+yuzey:"Yüzeyde 'dayanışmacı meslektaş'. Altta Burak'ın kötü algısı sana bulaşıyor; yöneticinin gözünde aynı kategoride sınıflanıyorsun.",
+kritik:`Burak'ın "şirket beni hak etmiyor" söylemine sessizce başını sallaman. Sessiz onayın bile aynı kategoriye yazıyor.`,
+simdi:`Sosyal çevreni gözle görülür şekilde değiştir — yüksek performanslılarla öğle yemeği, etkinliklerde onlarla görün. Burak'a kapıyı sertçe kapatma ama günlük temasa mesafe koy. Algı, çevre temizlendiğinde temizlenir.`},
+{n:11,t:"İnsanları sana bağımlı tut",c:["atak"],o:"Yerine geçilebilirsen yerine geçilirsin.",
+senaryo:`IT'den Cem ağabey, ihracat yönetim sisteminin tüm scriptlerini ve veritabanı şemalarını yıllar içinde inşa etmiş — sıfır dokümantasyon, tüm bilgi kafasında. Alihan onun tavırlarından rahatsız ama dokunamıyor: "Cem'i çıkartırsak sistem üç gün durur." Sen yeni bir API entegrasyonu yazdın — temiz kod, README, ayrıntılı şema, herkes okuyup çalıştırabilir. Şirketin yıllık 'kritik personel' listesinde Cem var, sen yoksun.`,
+yasalar:"Yasa 11 ana. Yasa 16 (yokluk) — Cem 'yoksa olmaz' algısını sistemleştirmiş; sen tam aksini.",
+yuzey:"Yüzeyde 'profesyonel, paylaşımcı geliştirici'. Altta vazgeçilebilirlik; her şeyi açık paylaştığın için kimseye bağlı değilsin, kimse de sana.",
+kritik:"Tüm dokümantasyonu peşinen, eksiksiz yapman. Bilgi paylaşımını koşulsuz şart koştun.",
+simdi:`Tamamen Cem gibi olma — dokümantasyon profesyonellik. Ama bir-iki kritik sistemin anahtarı sende kalsın: ${Q("Bu kısmı sözel anlatmak daha kolay, edge case'leri belgelemedim, gerekirse oturalım.")}Bilgi aktarımını zamanla yap, eğitimi sen ver.`},
+{n:12,t:"Seçici dürüstlük ve cömertlikle silahsızlandır",c:["atak","iletisim"],o:"Bir samimi jest, on yalanı örtebilir.",
+senaryo:`Müşteriye gönderdiğin bir teklif dosyasında küçük bir hesap hatası yaptın — %0.3'lük fark, müşteri muhtemelen fark etmez. Söylemedin. Pınar aynı dönemde benzer durumda farklı davrandı: tedarikçi sözleşmesinde bir kontrol unutmuş, doğrudan Alihan'a gitti: "Patronum, bir hata fark ettim, kendim düzeltiyorum, sizi bilgilendirmek istedim." Alihan: "Çok güzel, raporlamayı sevdim, sen dikkatli birisin." Sonraki ay Pınar'ı yeni bir tedarik projesine soktu — 'detaylara hâkim biri.' Senin küçük hatanı kimse fark etmedi; Pınar'ın 'şeffaflığı' onun terfi dosyasına yazıldı.`,
+yasalar:"Yasa 12 ana. Yasa 5 (itibar) — küçük dürüstlükler itibarı katlar.",
+yuzey:"Yüzeyde 'akıllılık, sorun çıkarmadım'. Altta fırsat kaçırdın; kontrollü dürüstlük itibar inşa eder.",
+kritik:`Hatayı saklamayı "akıllılık" sayman. Açıklamak hatadan büyük kazanç sağlardı.`,
+simdi:`Bir sonraki küçük hatada doğrudan Alihan'a git: ${Q("Patronum, bir nokta fark ettim, kendim çözüyorum, sizi bilgilendiriyorum.")}Dürüstlüğün küçük versiyonu, büyük denetimden seni kurtarır. Stratejik şeffaflık gizli kalmaktan güvenli.`},
+{n:13,t:"Yardım isterken çıkara seslen, merhamete değil",c:["iletisim"],o:"İnsanlar kendi çıkarları için yardım eder; minnet hızla unutulur.",
+senaryo:`Lojistik Zirvesi'ne katılmak istiyorsun. Alihan'a gittin: "Patronum, kendimi geliştirmek istiyorum, çok katkı sağlar." Alihan: "Ramazan, dönem zor, bütçe sıkışık." Bir hafta sonra Selin aynı konferans için ona gitti: "Patronum, rakip firmamız da katılıyor, ben gidersem onların yeni stratejisini öğrenip ekibe bir saha raporu hazırlarım." Alihan onayladı: "Tabii, bütçe bulunur." Aynı para, farklı çerçeve.`,
+yasalar:"Yasa 13 ana. Yasa 32 (fantezi) — Selin Alihan'a 'rakibi izleyen şirket' fantezisini sundu, soyut gelişim yerine somut istihbarat.",
+yuzey:"Yüzeyde 'gelişmek isteyen çalışan'. Altta Alihan için yatırım gerekçesi yok — 'sen kazanırsın, ben ne kazanırım?' sorusu cevapsız.",
+kritik:`"Kendimi geliştirmek" cümlesi. Senin gelişmen Alihan için pozitif ama soyut bir kazanç; bütçe için yetersiz.`,
+simdi:`Yeniden git: ${Q("Patronum, geçen sefer talep ettiğim konferansa rakip firma da gidiyor. Döndüğümde ekibe içerik özeti, size özel bir saha raporu hazırlarım — sektör analizi olarak değerlendirirsiniz.")}Çıkar omurgasını birinci cümleye koy.`},
+{n:14,t:"Dost gibi davran, casus gibi çalış",c:["atak","iletisim"],o:"Bilgi en değerli sermayedir; açılan dudaklardan akar.",
+senaryo:`Cem her cuma ekiple bira içmeye çıkıyor — rahat, güleryüzlü. Sen de gittin. Üçüncü cumada Cem sordu: "Ramazan, Selin'le iş gidiyor mu, biraz gergin gibisiniz." Sen rahatlamış halde anlattın: Selin'in son projesinde teknik bir hata olduğundan, ekibe söylemediğinden bahsettin. Üç gün sonra Alihan Selin'i çağırdı: "Selin, o teknik hatayı bana niye söylemedin?" Selin etrafına baktığında Cem ortalıkta yoktu. Senin cuma akşamı sohbetin Alihan'ın dosyasına geçmişti.`,
+yasalar:"Yasa 14 ana. Yasa 4 (az konuş) — sosyal ortamda da az konuşma kuralı geçerli, hatta daha sıkı.",
+yuzey:"Yüzeyde 'samimi mesai sonrası sohbet'. Altta Cem dosya topluyor, sen ona ücretsiz içerik veriyorsun.",
+kritik:`Selin'in hatasını sana "özel bilgi" olarak gördüğün an. Ofiste özel bilgi yoktur — her şey eninde sonunda dolaşır.`,
+simdi:`Mesai sonrası sohbetlerde 'söyleyemeyeceğin şey neyse onu söyleme' kuralını uygula. Cem'le ilişkini kesme — içeriği değiştir: hava, futbol, tatil. Başkaları hakkında bilgi paylaşımı sıfır.`},
+{n:15,t:"Düşmanını tamamen ez",c:["atak"],o:"Yarı bırakılan düşman geri döner, daha sert vurur.",
+senaryo:`Pazarlama Müdürü Hakan Bey, yıl başında ortak proje bütçeni kestiren kişiydi. Yıl ortasında Alihan'ın gözünden düştü, tenzili rütbe ile küçük bir departmana çekildi. Sen "aman, eski adam, kötü olmasın" diyerek ona bilgi paylaştın, küçük iyilikler yaptın. Bir buçuk yıl sonra Hakan farklı bir yöneticinin desteğiyle yeniden yükseldi — artık Üst Yönetim Asistanı, zam onay süreçleri onun masasından geçiyor. Alihan senin için %12 zam önerdi; Hakan zammı %4'e kıstı. Yarım bıraktığın düşman, en sessiz yerden döndü.`,
+yasalar:"Yasa 15 ana. Yasa 19 (kiminle uğraştığını bil) — Hakan'ın geri dönme ihtimalini hesap etmedin.",
+yuzey:"Yüzeyde 'iyi insan, eski adamı kollayan'. Altta gücü kalmamış sandığın biri, yarın senin önündeki onay merciin oldu.",
+kritik:`"Eski adam" diyerek köprüleri yarım bırakman. Yenildiği zaman ya tamamen ittifak kur, ya tamamen mesafelen — arada kalmak en kötüsü.`,
+simdi:`Hakan'la şu anki ilişkini sertleştirme; ama Alihan'a paralel güvenilir müttefikler edin, onay süreçlerini tek kapıya bağlama. Bir sonraki çatışmada yarım iş yapma — sonuna kadar git ya da hiç başlama.`},
+{n:16,t:"Yokluğunu saygıyı artırmak için kullan",c:["algi"],o:"Her gün ortada olan kıymetsizleşir.",
+senaryo:`Her Slack mesajına 4 dakikada dönüyorsun, her toplantıyı kabul ediyorsun, izinde bile telefona bakıyorsun. Üç haftalık tatil dönüşünde Alihan: "Sen yokken ekip iyi çalıştı, bu pozisyonu Furkan üstlenebilir aslında." Selin aynı yıl iki kez "şu hafta uzağım, acil sorun olursa Hakan'a sorun" deyip kayboldu — işler aksadı, döndüğünde Alihan: "Selin, sen olmadan zor, kıdem zammı yapalım."`,
+yasalar:"Yasa 16 ana. Yasa 30 (zahmetsiz görün) — her zaman erişilebilir olmak değer değil, bağımlılık görünür.",
+yuzey:"Yüzeyde 'sadık, çalışkan'. Altta 'her zaman var = ihtiyaç olduğunda da var' — ayrı bir değeri olmayan kaynak.",
+kritik:"İzinde Slack'e dönmen. Bir kere döndüğünde standart oldu, yokluk hakkını kaybettin.",
+simdi:`Sınır koy — hafta sonu "derinleşmem gereken bir konu var, pazartesi sabah ararım" formülü. Üç günlük bir 'odaklanma' kapanması yap. Değer dönüşünde gelir; yokluğun kıymetin terazisidir.`},
+{n:17,t:"Öngörülemezlik havası yarat",c:["algi","atak"],o:"Tahmin edilebilir olan kontrol edilebilir.",
+senaryo:`Alihan'ın her olaya tepkisi tahmin edilebilir — geç gelene mail atar, sunum hatasına ekip önünde çıkışır, tatil isteğine "düşünelim" der. Ekip onun haritasını çıkardı; kararları onun haberi olmadan almaya başladı. Bir gün Alihan beklenmedik bir şey yaptı: küçük bir hatayı 'büyütecek' diye herkes beklerken sustu. Üç gün sonra başka birinin küçük başarısına aşırı tepki verdi, yönetim kuruluna sundu. Bir ay boyunca kimse 'Alihan ne der?' sorusunu peşinen cevaplayamadı — tüm kararlar yeniden onun masasından geçmeye başladı.`,
+yasalar:"Yasa 17 ana. Yasa 33 (zayıf nokta) — öngörülebilir kişinin haritası çıkarılır, sınırları bulunur.",
+yuzey:"Yüzeyde 'tutarlı yönetici'. Altta tutarlı = tahmin edilebilir = kontrol edilebilir.",
+kritik:"Sen Alihan değilsin ama prensip aynı; tepkilerin her zaman aynı olursa etrafındakiler senin için strateji üretir.",
+simdi:`Bir sonraki onay sürecinde beklenmedik bir soru sor, beklenmedik bir hızda dön ya da kasıtlı geç. Birkaç ay içinde "önce Ramazan'a sor" refleksi geri döner.`},
+{n:18,t:"Kale kurma — izolasyon tehlikelidir",c:["savunma"],o:"Görünmez olan savunmasız hâle gelir.",
+senaryo:`İhracat departmanında 4 yıldır masandasın, sadece kendi ekibinle konuşuyorsun. Pazarlama, finans, satın alma, İK — hiçbir yere uğramıyorsun. Şirket küçülme kararı aldı; Alihan masasında 10 isimlik bir liste tuttu — kim kalır, kim çıkar. İK Müdürü Aslı, Pazarlama Müdürü Hakan, Finans'tan Pınar masaya oturdu — hiçbiri seni tanımıyor: "Ramazan kim?" Alihan: "İhracatçı bir arkadaş, dört yıldır burada." Liste kapandı, sen listedeydin.`,
+yasalar:"Yasa 18 ana. Yasa 19 (kiminle uğraştığını bil) — hiç kimseyi tanımadın, kimse seni tanımıyor.",
+yuzey:"Yüzeyde 'işine odaklı, baş ağrısı olmayan çalışan'. Altta görünmez = savunmasız; kimse seni savunmaz çünkü kimse seni tanımıyor.",
+kritik:`Departmanlar arası fırsatları reddetmen. "Ben işimi yapayım yeter" yaklaşımı kriz anında işlemiyor.`,
+simdi:`Üç ay içinde 5 farklı departmandan birer kişiyle kahve iç. Boş muhabbet yetmez — küçük bir destek ver (analiz, veri, kontak). Sadakat ağı, kriz anında 'bu kişi tanıdığım, iyi biri' diye seni listeden çıkartır.`},
+{n:19,t:"Kiminle uğraştığını bil",c:["savunma","iletisim"],o:"Yanlış kişiyi gücendirmek ömür boyu sürer.",
+senaryo:`Şirkete yeni gelen Furkan, Alihan'ın 11 yıllık asistanı Pınar Hanım'a sürekli emredici davranıyor: "Bunu yarın sabaha kadar masamda istiyorum", "Çayı şekersiz dedim." Pınar bir şey demedi, gülümsedi. Üç ay sonra Furkan'ın iki önemli toplantısı "patronun takvimi kapalı" diye iptal oldu, üç maili "sonradan" iletildi, izin talebi "unutuldu." Yedi ayda işten çıkış kararı çıktı — "koordinasyon problemi." Pınar tek kelime etmedi; ama hiçbir şey de yapmadı.`,
+yasalar:"Yasa 19 ana. Yasa 33 (zayıf nokta) — Pınar'ın görünmez gücünü hesaplamadın.",
+yuzey:"Yüzeyde 'asistanla ilgili kategori, önemsiz'. Altta her büyük yöneticinin koruyucu asistanı; bilgi akışını ve takvimi kontrol eden.",
+kritik:`İlk haftada Pınar'a "yardımcı" muamelesi yapman. Onun kıdemini, Alihan'la geçmişini hesaba katmadın.`,
+simdi:`Bir kahve daveti, küçük bir özür: ${Q("Pınar Hanım, ilk haftalar epey gergindim, kabalık ettim biliyorum. Çayınızı içelim mi?")}Statüyü iade et. Asistanlar, sekreterler, IT desteği — şirketin görünmez ağıdır; onlarla iyi geçinmiyorsan hareket alanın daralır.`},
+{n:20,t:"Kimseye bağlanma",c:["savunma"],o:"Taraf tutan, kaybedenle birlikte yazılır.",
+senaryo:`Şirkette CFO Aslı Hanım ile COO Mert Bey arasında sessiz bir güç savaşı var. Sen Aslı Hanım'ın bir yatırım sunumunda destek istedin, hazırlıkta yardım ettin, herkesin önünde "finans haklı" dedin. Bir yıl sonra Mert Bey yönetim kurulu desteğiyle öne çıktı, operasyon ağırlıklı bir yapı kurdu; Aslı geri planda kaldı. Senin adın 'eski Aslı ekibi' olarak sessizce listelendi. Selin aynı dönemde her iki tarafla çalışmaya devam etti, hiçbirine "sizdenim" demedi.`,
+yasalar:"Yasa 20 ana. Yasa 22 (teslim taktiği) — taraf seçmemek stratejik bir disiplin.",
+yuzey:"Yüzeyde 'prensipli, açık duruşlu'. Altta açık duruş ucuza geliyor; tarafsız olmak değil, aktif olarak iki tarafla çalışmak güç sağlar.",
+kritik:`Aslı Hanım'a açık destek verdiğin toplantı. "Mantıklı olan bu" cümlesi seni yazdırdı.`,
+simdi:`İki tarafla iletişimi koru, hiçbirine "sizdenim" deme. Kendi çıkarın net olsun — her iki tarafa yararlı çıktı üret. Sembolik mesafe önemli: kimin tarafında oturduğunu, kiminle yemek yediğini izlerler.`},
+{n:21,t:"Salakları yakalamak için salak rolü yap",c:["atak"],o:"Üstün zekâ tehdittir; bilmiyormuş gibi davranmak rakibi açar.",
+senaryo:`Almanya'dan tedarikçi sözleşme müzakeresi — 22 sayfa İngilizce metin. Temsilci hızlıca anlatıyor, "standart maddeler" diyor. Sen Alihan'la birliktesin, ikiniz iyi İngilizce biliyorsunuz. Alihan bir maddede durdu: "Üzgünüm, bu kısmı tam anlayamadım, açar mısınız?" Tedarikçi açıklarken cezai şart maddesindeki 'force majeure' istisnalarını detaylandırdı — kendi aleyhine bir boşluğu kendi açtı. Alihan o boşluğu kullandı, maddeyi iptal ettirdi. Sonra sana: "Anlamadığım için sormadım, sorması rahatsız etti onları."`,
+yasalar:"Yasa 21 ana. Yasa 3 (niyetleri gizle) — Alihan'ın anlamadığı yoktu, niyeti gizliyordu.",
+yuzey:"Yüzeyde 'anlamayan ama dürüst yönetici'. Altta zekayı saklayarak rakibi açıklamaya zorlamak — savunma kendini ele verir.",
+kritik:"Yok — bu öğrenme senaryosu. Alihan'ın stratejisini gözle, kasıtlı naifliğin gücünü anla.",
+simdi:`Bir sonraki müzakerede "çok zekiyim" baskısı yapma. ${Q("Bu maddeyi tam anlayamadım, biraz daha açar mısınız?")}sorusunu sor; karşı taraf savunurken kendi açığını verir. Naiflik pahalı bir araç.`},
+{n:22,t:"Teslim olma taktiği: zayıflığı güce çevir",c:["savunma"],o:"Boyun eğmek zayıflık değil zaman kazanmaktır.",
+senaryo:`Yeni CRM seçiyorsunuz. Sen detaylı bir karşılaştırma yaptın: HubSpot, Salesforce'a kıyasla üç açıdan daha uygun — veri, fiyat, kullanım kolaylığı. Alihan Salesforce istiyor. İki toplantı boyunca tartıştın, "patronum, rakamlara bakın" dedin. Alihan sertleşti. Üçüncüde direnişten vazgeçtin: "Patronum, sizin tercihinize saygı duyuyorum, Salesforce ile gidelim, elimden geleni yaparım." İki ay sonra Salesforce pahalıya patladı, ekipte uyum sorunu çıktı. Alihan: "Ramazan, sen bunu görmüştün galiba." Sen hiçbir şey demedin — karşı çıkmıştın zaten.`,
+yasalar:"Yasa 22 ana. Yasa 9 (eylemle kazan) — tartışmayla değil, yanlış kararın doğal sonucu seni haklı çıkardı.",
+yuzey:"Yüzeyde 'astınız, kararınıza saygılı'. Altta erken teslim olmak fikrini koruyan en güçlü hamle: ben dedim, sen yapmadın, ben hata yapmadım.",
+kritik:"Üçüncü toplantıda durman doğru. İki toplantı argüman, üçüncüsü inattır.",
+simdi:`Bir sonraki büyük kararda bir kez argümanını sun, kabul edilmezse yazılı "görüşümü bildirdim" notu bırak ve geri çekil. Doğal sonuçlar argümanlardan etkili konuşur.`},
+{n:23,t:"Güçlerini topla",c:["savunma","atak"],o:"Dağınık çaba sıfır etki yapar.",
+senaryo:`Yıl başında Alihan: "Ramazan, sen çok değerlisin, beş projeye girmeni istiyorum — lojistik, müşteri portalı, raporlama, gümrük, içerik." Heyecanla "tabii patronum" dedin. Sene boyunca her projeye ortalama bir katkı yaptın, hiçbirinde mükemmel değil. Yıl sonu değerlendirmesinde ismin yanına "çok çeşitli alana katkı" yazıldı. Aynı dönem Selin sadece müşteri portalına odaklandı, 14 ayını oraya verdi. Selin "Yılın Projesi" ödülünü aldı; sen "ekip oyuncusu" tebriği aldın.`,
+yasalar:"Yasa 23 ana. Yasa 30 (zahmetsiz görün) — dağıldığında zahmet artar, görünür sonuç azalır.",
+yuzey:"Yüzeyde 'her yere yetişen değerli çalışan'. Altta hiçbir yerde derinleşmemiş, hatırlanacak tek bir 'imza işi' yok.",
+kritik:`"Tabii patronum" dediğin an. Beş projeye 'evet' demek, hiçbirine derinleşmemek demek.`,
+simdi:`Bu çeyrek Alihan'a git: ${Q("Patronum, beş projeye dağılmak yerine müşteri portalına derinleşmek istiyorum, sayısal hedef koyalım — diğerlerinden çekilebilir miyim?")}Bir alan seç, oraya tüm kasları topla. Yıl sonunda 'imza eseri' lazım.`},
+{n:24,t:"Mükemmel saraylı rolünü oyna",c:["algi","iletisim"],o:"Üst yapıda hayatta kalmanın kuralı içerik değil formdur.",
+senaryo:`Furkan teknik olarak ekibin en zayıfı — kodlama orta, analiz yarım. Ama Alihan'ın gönderdiği her maile 11 dakikada dönüyor, her toplantıya 5 dakika erken giriyor, Alihan'ın kahve tercihini biliyor, çocuklarının okul sınavlarını hatırlıyor. Mert ekibin en yetenekli geliştiricisi — kod akıllı, ürün kalitesi yüksek, ama maillere 3 saatte dönüyor. Müdür Yardımcılığına Furkan terfi etti. Mert şaşırdı: "Ama ben daha iyi geliştiriciyim." Şirket çok iyi geliştirici aramıyor; iyi saraylı arıyor.`,
+yasalar:"Yasa 24 ana. Yasa 27 (inanma ihtiyacı) — Alihan Furkan'a 'benim adamım' diye inanıyor, içerik ikincil.",
+yuzey:"Yüzeyde 'işi iyi yapan terfi eder'. Altta üst yönetimde iş kalitesi gerekli ama yeterli değil — biçim de en az içerik kadar ağırlıkta.",
+kritik:`Mert'in "işim iyi yeter" inancı. Ofis politikası lüks değil, bileşen.`,
+simdi:`Sen Mert isen: Alihan'ın yönetim ritüellerine uyum sağla — mailde hız, toplantıda ön sıra, küçük kişisel dikkatler. İçeriği bırakma ama biçim de ekle. Saraylılık iyi iş yapmaya engel değil; saraylılığın yokluğu iyi işini görünmez kılıyor.`},
+{n:25,t:"Kendini yeniden yarat",c:["algi"],o:"Tek bir kimliğe yapışmak seni kategoriye sıkıştırır.",
+senaryo:`Yedi yıldır "gümrük operasyonu Ezgi" olarak tanınıyorsun. Şirket büyüyor, stratejik bir pozisyon açılıyor: 'Uluslararası Pazar Stratejisi Müdür Yardımcısı.' Sen başvurdun. Alihan: "Ezgi, sen gümrük tarafında çok iyisin ama strateji başka bir kasınla iş." Pozisyon dışarıdan alınan birine gitti. Bir yıl boyunca her hafta bir pazar analizi yazdın, Alihan'ın olduğu bir Slack kanalına attın — kimse istememişti. Sonraki yıl açılan iş zekası pozisyonuna 'doğal' olarak sen aday gösterildin.`,
+yasalar:"Yasa 25 ana. Yasa 6 (dikkat çek) — yeni kimliği görünür kılmadan içsel değişim yetmez; etiket görünür değişimle değişir.",
+yuzey:"Yüzeyde 'rol dışında düşünüyorum'. Altta etiketler kalıcıdır; etiket değişmeden rol değişmez, etiketin değişmesi için aylarca görünür yeni davranış gerekir.",
+kritik:"Sadece başvurman. Başvurmadan önce 'yeni' kimliği aylarca görünür kılmalıydın — analizler, sunumlar, sektör görüşleri.",
+simdi:`Önümüzdeki 6 ay haftada bir analiz yaz, kimse istemese de. LinkedIn'de strateji yazıları paylaş, Alihan'a sektör haberlerini yorumlu ilet. Etrafındaki algıyı yapışkanca değiştir; bir sonraki fırsata "zaten oydu" olarak gel.`},
+{n:26,t:"Ellerini temiz tut",c:["atak"],o:"Kirli işi başkasına yaptır; sen sonucu al.",
+senaryo:`Ekipte Kerem'in performansı altı aydır düşüyor — geç geliyor, raporları yetiştirmiyor, müşteri şikayetleri artıyor. Alihan onu çıkartmak istiyor ama doğrudan kendisi yapmıyor. İK Müdürü Aslı'ya: "Aslı Hanım, Kerem'in son altı aylık performansını incelersek bir rapor çıkar mı acaba?" Aslı süreç başlattı, üç haftada işten çıkarma kararı çıktı. Kerem ofisten çıkarken Alihan'a el sıktı: "Patronum, sizinle çalışmak güzeldi, İK çok sıkıştırdı beni anlaşılan." Alihan rolünü oynuyor: "Üzgünüm Kerem, prosedür." Karar onundu, izi yok.`,
+yasalar:"Yasa 26 ana. Yasa 14 (casus gibi) — Alihan kararı Aslı'nın ağzından, 'rapor' formatında çıkartıyor.",
+yuzey:"Yüzeyde 'şefkatli yönetici, prosedüre tabi'. Altta tetiği çeken o, kurşunu başkası taşıdı.",
+kritik:"Kerem'in son sözleri. Alihan'ı sevmeye devam ediyor — en temiz manipülasyon bu.",
+simdi:`Kerem pozisyonundaysan: kararın gerçek sahibi kim, anla. Resmi prosedüre teşekkür etme — asıl kararın kimden çıktığını sessizce kaydet. Tersinden: kendi zor kararlarını başkasına taşıttırmayı öğren — direkt taşımak ucuza gelmez.`},
+{n:27,t:"İnsanların inanma ihtiyacını kullan",c:["algi","iletisim"],o:"İnsanlar düşünmek yerine inanmak ister.",
+senaryo:`Yıl başı toplantısında Alihan: "Arkadaşlar, 2026'da sektörü değiştireceğiz. Türkiye'nin en hızlı büyüyen ihracat operasyonu olacağız." Somut hedef yok, plan yok, ama herkes alkışladı. Mert sordu: "Patronum, hangi pazarlarda, hangi büyüme oranıyla?" Alihan: "Detaylar yolda, vizyon önce." Mert sonradan 'soğuk ve sayısal' diye etiketlendi. Selin sessizdi, sonra Alihan'a özel mesaj attı: "Patronum, bu vizyonu paylaşıyorum, her sabah bu duyguyla geleceğim." Selin'in adı sonraki ay 'değişim elçisi' olarak duyuruldu.`,
+yasalar:"Yasa 27 ana. Yasa 32 (fantezi) — 'sektör değiştireceğiz' bir fantezi, somut değil; bu yüzden daha güçlü.",
+yuzey:"Yüzeyde 'iyimser lider, motivasyon konuşması'. Altta ölçülemez vizyon, ölçülemez olduğu için kimseyi sorumlu tutamaz — sonuçtan bağımsız sadakat üretir.",
+kritik:"Mert'in 'sayısal' sorusu. Doğru soruydu ama yanlış zamanda, açık toplantıda, vizyonun karşısında.",
+simdi:`Açık toplantıda 'sayı' sorma — kişisel kanalda sor, yüzleştirme değil işbirliği çerçevesinde: ${Q("Patronum, vizyonu hedeflere bağlamak için sizin için bir taslak hazırlasam katkım olur mu?")}Hem inananlardan ayrışmazsın, hem somut iş yaparsın.`},
+{n:28,t:"Eyleme cesaretle gir",c:["atak"],o:"Tereddüt hatadan daha çok zarar verir.",
+senaryo:`Yatırımcı toplantısında Cem ve Selin aynı veriyi sundular. Cem konuşurken titrek: "Şöyle olabilir, eğer doğruysa, yanılıyor olabilirim." Veriler aslında Cem'inkilerde daha sağlam. Selin sertçe konuştu: "%18 büyüme bekliyoruz, üç çeyrekte kâra döneceğiz, bu yatırımdan kaçınmak şirket için tarihsel bir hata olur." Verisi daha az destekli ama tonu kesin. Yönetim kurulu Selin'in projesini onayladı, 1.2 milyon TL bütçe verdi. Cem'in verisini 'belirsiz' diye bıraktılar.`,
+yasalar:"Yasa 28 ana. Yasa 37 (etkileyici gösteri) — Selin sahnenin nasıl kurulacağını biliyordu.",
+yuzey:"Yüzeyde 'içerik kazanır'. Altta üst yönetim içeriği değerlendirecek zamana sahip değil — tonu değerlendirir.",
+kritik:`Cem'in "eğer doğruysa" demesi. Bir kez söylendi, kredi düştü.`,
+simdi:`Bir sonraki sunumunda 'düşünüyorum ki, sanırım, belki' kelimelerini sil. ${Q("Görüyorum, öneriyorum, yapacağız.")}İçerik aynı, cümle yapısı farklı — sonuç değişir.`},
+{n:29,t:"Sonuna kadar planla",c:["savunma"],o:"Sadece başlangıcı görenler ortada tökezler.",
+senaryo:`Yeni bir müşteri ilişkileri yazılımına geçiş projesi başlattın. İlk hafta heyecanla başladın — yazılım seçildi, hesaplar açıldı, eğitim toplantısı yapıldı. Üçüncü ay: eski sistemden veri göçü hâlâ yapılmamış, eski sistem hâlâ kullanılıyor, ekip iki sistemde paralel çalışıyor. Beşinci ay: müşteri kayıtları kayboldu — hangi sisteme hangi kaydın yazıldığı belli değil. Yedinci ay: Alihan projeyi iptal etti. "Ramazan, sen iyi başlatıyorsun ama bitirmiyorsun."`,
+yasalar:"Yasa 29 ana. Yasa 28 (cesaret) ters tarafı — cesur başlangıç, planlı son olmadan çürür.",
+yuzey:"Yüzeyde 'aksiyon insanı'. Altta 'iyi başlayan ama bitirmeyen' etiketi en zor sökülenidir; bir kez yapışırsa proje almakta zorlanırsın.",
+kritik:"Veri göçü planını başlangıçta yapmaman. Birinci hafta hesaplar açılırken bitiş tarihi ve son adımlar takvime girmeliydi.",
+simdi:`Önümüzdeki bir hafta projeye geri dön, bitiş planı yaz — veri göçü, eski sistem kapanma tarihi, eğitim tamamlanma. Alihan'a sun: ${Q("Patronum, planı revize ettim, üç ayda kapanır, taahhüt veriyorum.")}İtibarı kurtarmak için projeyi kurtar.`},
+{n:30,t:"Başarılarının zahmetsiz görünmesini sağla",c:["algi"],o:"Çabanı gösterirsen sıradan, gizlersen efsane olursun.",
+senaryo:`Furkan her toplantıda 'gece 3'e kadar çalıştım', 'hafta sonu tatil yapmadım', 'şu rapor için 40 saatim gitti' diyor. Alihan başlangıçta sempatiyle dinledi, üç ay sonra: "Furkan demek ki verimli değil, basit bir işi 40 saatte yapıyor." Aynı dönemde Selin aynı türde işleri 'iki saatte hızlıca topladım', 'bir oturuşta yazdım' diyerek anlatıyor. Aslında Furkan gibi zorluk çekti ama gizliyor. Alihan: "Selin doğal yetenekli, işleri kolay yapıyor." Aynı emek, farklı algı.`,
+yasalar:"Yasa 30 ana. Yasa 5 (itibar) — 'zorlanan' itibarı yıpranır.",
+yuzey:"Yüzeyde 'çalışkanlık görünür olmalı'. Altta üst yönetim verimi sonuca bakarak ölçer — emeği sayan emekçidir, emekçi yöneticinin gözünde 'değer üreten değil maliyet'.",
+kritik:`"Gece 3'e kadar çalıştım" cümlesi. Sempati değil, soru işareti üretti.`,
+simdi:`Çabanı paylaşma — sonuçları paylaş. ${Q("Şu raporu hazırladım, sonuçlar elinizde.")}Saat soran olursa "iki gün ortalama" gibi nötr bir cevap. Emek görünmez olduğunda zekâ gibi görünür.`},
+{n:31,t:"Seçenekleri kontrol et",c:["atak"],o:"Kararı sen ver, seçimi karşı tarafa bırak.",
+senaryo:`Asistanın Ezgi sana: "Yeni stajyer için adayları topladım, baktım iki güzel profil var: Aday A finans tarafında güçlü, B operasyon tarafında." Sen baktın: ikisi de iyi adaylar gibi. Aday A'yı seçtin, kendini özgür karar veren bir yönetici gibi hissettin. Üç ay sonra fark ettin: Ezgi aslında 8 başvurudan en iyi 4'ünü değil, kendi ön elemesinden sonra kalan iki vasat adayı sundu. Gerçek karar onundu; sana sadece 'seçme hissi' verdi.`,
+yasalar:"Yasa 31 ana. Yasa 21 (salak rolü) tersinden — Ezgi sana kararın seninmiş gibi hissettirdi.",
+yuzey:"Yüzeyde 'iki seçenek arasında karar verdim'. Altta seçim çerçevesinin kendisi başkası tarafından kuruldu, gerçek seçeneklerden bihaberdin.",
+kritik:`"İki güzel profil var" cümlesini sorgulamaman. "Toplam kaç başvuru oldu, niye sadece ikisini sunuyorsun, hepsini görebilir miyim?" sorusu kapı açardı.`,
+simdi:`Bir sonraki karar sunulduğunda 'ne elendi, neye göre elendi, hepsini görebilir miyim?' diye sor. Çerçeveyi kabul etmeden önce çerçeveyi sorgula.`},
+{n:32,t:"İnsanların fantezilerine oyna",c:["iletisim","algi"],o:"Gerçek ağırdır; fantezi hafif ve baştan çıkarıcıdır.",
+senaryo:`Üç çeyrek üst üste hedefin altında kaldınız. Cem ekipte konuştu: "Patronum, gerçekçi olalım, hedefleri %20 düşürmeliyiz." Sayılar doğruydu. Alihan rahatsız oldu. Sonra Selin: "Patronum, biz iki yıl önce de aynı duruma düştük, kavga ettik ve ayağa kalktık. Bu çeyrek tarih yazacağımız çeyrek olabilir, ekip olarak bir efsane şekillendiriyoruz." Sayılar yoktu, ama 'efsane' sözcüğü vardı. Alihan: "Selin, sen ruhunu koruyorsun, bu ekibin ihtiyacı bu." Cem 'soğuk' diye etiketlendi.`,
+yasalar:"Yasa 32 ana. Yasa 27 (inanma ihtiyacı) — Selin'in hikâyesi sayıyı geçti.",
+yuzey:"Yüzeyde 'iyi yöneticiler veriyle düşünür'. Altta krizde insan veri istemez, hikâye ister — özellikle yöneticiler.",
+kritik:`Cem'in "gerçekçi olalım" cümlesi. Doğru içerik, yanlış zamanlama, yanlış üslup.`,
+simdi:`Veri sunarken hikâye omurgasıyla sun: ${Q("Bu çeyrek yeniden ayağa kalkma çeyreği, şu üç hamleyle %12 büyürüz.")}İçerik aynı, ambalaj farklı. İnsanlara yön ver, sayı ardından gelsin.`},
+{n:33,t:"Her insanın zayıf noktasını keşfet",c:["atak"],o:"Her insanın bir 'iğne deliği' vardır.",
+senaryo:`Burak'ın ofiste herkesle iyi geçinmek gibi bir takıntısı vardı — 'sevilen kişi' olmak onun kimliği. Cem bu hassasiyeti üç ay gözledi. Sonra hiç sesini yükseltmeden, her toplantıda şöyle cümleler kurmaya başladı: "Ekip biraz tereddütlü gibi bu konuda Burak, doğru mu okuyorum acaba?", "Burak'ı sevdiğimden söylüyorum ama bazı arkadaşlar farklı düşünüyor." Burak günler boyu uykusuz kaldı. İki ayda istifa etti, "işten zevk almıyorum" diye. Hiç açık saldırı olmadı.`,
+yasalar:"Yasa 33 ana. Yasa 44 (ayna etkisi) tersinden — Cem 'sevdiğin şeyi sana karşı kullanma' versiyonu uyguladı.",
+yuzey:"Yüzeyde 'iyi niyetli endişe paylaşımı'. Altta hedefin en hassas noktasından yavaş baskı.",
+kritik:"Burak'ın 'sevilmek' kimliğini ofiste her gün açıkça yaşaması. Zayıf noktası göz önündeydi.",
+simdi:`Kendi zayıf noktanı bil: onaylanma, statü, hata yapmaktan korkma, tanınma — hangisi senin için en büyük? Bunu sosyal medyada, ofis sohbetlerinde, mesai sonrası buluşmalarda saklamayı öğren. Görünmeyen iğne deliği saldırı almaz.`},
+{n:34,t:"Kendi tarzında asil ol",c:["algi"],o:"Kendine inandığın kadar inanılırsın.",
+senaryo:`Selin şirkete 24 yaşında geldi — ihracat asistanı olarak. İlk gününden itibaren ofiste duruşu, dili, giyimi kıdemli bir yönetici gibiydi. Toplantıda 5 dakika önce orada, soru sorduğunda kibar ama net, "düşüneyim ve döneyim" cevabı, hatasını kabul ederken bile soğukkanlı. Üç ay sonra ekip ona "asistan" yerine "Selin Hanım" demeye başladı; altıncı ayda Alihan toplantıda Selin'i "kıdemli arkadaşımız" olarak takdim etti, oysa altı aylıktı. Bir yıl sonra Müdür Yardımcılığına resmen atandı.`,
+yasalar:"Yasa 34 ana. Yasa 25 (yeniden yaratma) — kendini başlangıçtan farklı çerçeveledi.",
+yuzey:"Yüzeyde 'kibirli mi acaba?' Altta inandığı role kendini büründürdü, çevre roldeki kişiye uyum sağladı.",
+kritik:"İlk gün — giriş anı her şeyi belirledi. Pozisyon değil, duruş.",
+simdi:`Bulunduğun pozisyondan bir basamak üstün davranışını edin — giyim, dil, tepki süresi, toplantıdaki postür. Pozisyon değil, sen pozisyonu yarat. İnsanlar inandığın şeye inanır.`},
+{n:35,t:"Zamanlama sanatında ustalaş",c:["atak","savunma"],o:"Doğru fikir, yanlış zamanda yanlış fikirdir.",
+senaryo:`Kerem, şirketin bütçe kesintisi açıklandığı sabah Alihan'a girdi: "Patronum, ben de zam istemek istiyorum, performansım yüksek." Alihan dinledi, "şu an dönem zor" dedi. Bu ret tüm yıl boyunca Kerem'in dosyasına "zamansız çıkışlar" diye yazıldı. Pınar üç hafta bekledi, kendi yürüttüğü bir projenin başarılı sunumundan tam üç gün sonra aynı zammı istedi: "Patronum, bu projeyi kendi başıma yönettim, kalıcı bir tanınma rica ediyorum." Onay öğleden önce çıktı.`,
+yasalar:"Yasa 35 ana. Yasa 32 (fantezi) — Pınar başarı hikâyesinin sonuna eklediği için onun parçası oldu.",
+yuzey:"Yüzeyde 'iyi performans zammı getirir'. Altta zammı performans değil, performansın ardından gelen zamanlama getirir.",
+kritik:"Bütçe kesintisi sabahı Alihan'ın masasına çıkman. Aynı talep üç hafta sonra farklı yanıt alırdı.",
+simdi:`Önemli talepleri bir başarı momentinden hemen sonraya koy. Talebi performans hikâyesinin ödülü olarak çerçevele. Zamanı doğru seçmek, içerikten ağır.`},
+{n:36,t:"Sahip olamadığını küçümse",c:["algi"],o:"İlgi gösterdiğin şey büyür, sen küçülürsün.",
+senaryo:`Departman müdürlüğüne aday gösterildin, Selin'e gitti. Sen aylarca herkese içerleyerek konuştun: "Yıllardır bekledim, bu pozisyon benim hakkımdı, neden Selin?" Her toplantıda gerginlik, her sohbette acı bir gönderme. Selin ise terfi aldığı gün hiçbir şey demedi, ertesi gün eski stilde gelmeye devam etti — sanki kendi rolünden hiç çıkmamış gibi. Altı ay sonra Alihan onun "soğukkanlı duruşunu" ekibe örnek olarak gösterdi.`,
+yasalar:"Yasa 36 ana. Yasa 5 (itibar) — şikâyet sürdükçe itibar erir.",
+yuzey:"Yüzeyde 'hak edilmiş içerleme'. Altta her sızlanma seni daha küçük, alamadığını daha büyük gösterir — sahip olamadığın gücüne tanık olursun.",
+kritik:"Terfi haberini aldığın gün ilk tepkin. Belki bir cümle — sonrasında kelime kalmadı, hep tekrar.",
+simdi:`Bugünden başla: bu konuyu sıfırla. Selin'i tebrik et, normalmiş gibi davran: ${Q("Bir sonraki kapı için kendimi hazırlıyorum.")}Üç ay içinde 'küs' etiketinin yerine 'olgun' etiketi gelir.`},
+{n:37,t:"Etkileyici gösteriler yarat",c:["algi","iletisim"],o:"Görsel etki, mantıklı argümandan ağır basar.",
+senaryo:`Yıllık pazar değerlendirme sunumu. Cem 18 sayfa Excel hazırladı — veriler doğru, analiz derin. Düz ekrandan sayıları gösterdi, "şu rakam dikkat çekici" diye işaret etti. Yönetim kurulu dinledi, başını salladı. Ezgi aynı verilerle 6 slaytlık öyküleştirilmiş bir sunum yaptı — büyük görseller, tek bir grafik, "Küresel Pazar 2026 Senaryosu" başlığı. Sunum sonrası üyelerden biri: "Ezgi'nin sunumu için onları tekrar göreceksek bir hazırlık yapın." Cem'in adı geçmedi.`,
+yasalar:"Yasa 37 ana. Yasa 6 (dikkat çek) — sunum sahnesi en güçlü dikkat çekme aracı.",
+yuzey:"Yüzeyde 'doğru veri yeter'. Altta üst yönetim hatıralarda yaşar — hatırlanan içerik değil, hatırlanan sahnedir.",
+kritik:`Cem'in "veri kendini anlatır" inancı. Hayır, anlatmaz — sahneye konulması lazım.`,
+simdi:`Bir sonraki sunumun için zaman ayır: hikâye akışı kur, bir ana grafik tasarla, üç vurgu noktası seç. Aynı içerikten daha az slayt, daha çarpıcı sunum. İçerikten ödün verme ama sahneyi savsama.`},
+{n:38,t:"Düşündüğün gibi düşün, başkaları gibi davran",c:["savunma"],o:"Aykırı görünmek bedeli en yüksek lükstür.",
+senaryo:`Şirket kültürü 'mesai uzun, ofise gel' ağırlıklı. Sen evden çalışmanın daha verimli olduğuna inanıyorsun. Her toplantıda "patronum, hibrit modelden yanayım, %30 daha verimli oluyorum" diye savunuyorsun. Alihan kibar ama "bizim kültürümüz farklı" diyor. Bir yıl boyunca aynı pozisyondasın, 'aykırı' etiketiyle hatırlanıyorsun. Mert seninle aynı görüşte ama açıkça söylemedi — ofise her gün geldi, görünüşte uyumlu kaldı. Müdür Yardımcılığına Mert terfi edince Alihan'a önerisini koydu: "Patronum, bir pilot grupta hibrit deneyelim." Aynı görüş, farklı pozisyondan dile geldi — kabul edildi.`,
+yasalar:"Yasa 38 ana. Yasa 45 (yavaş reform) — dış uyum içsel devrime engel değil; tam tersine, devrim için dış uyum şart.",
+yuzey:"Yüzeyde 'dürüstlük, fikir savunmak'. Altta açık aykırılık 'kültürle uyumsuz' damgası getiriyor; terfi yolunu kapatıyor.",
+kritik:"'Aykırı' olarak tanındığın ilk toplantı. Sonrası savunma savaşı.",
+simdi:`Bir süre fikirlerini açık savunmayı bırak. Görünür şekilde kültüre uyum sağla. Aynı fikri pozisyon kazandıktan sonra 'yöneticilik' perspektifinden geri getir. Kendi içinde düşündüğünü dışarıda söylemek bir lüks; bedeli pozisyondur.`},
+{n:39,t:"Balığı yakalamak için suyu bulandır",c:["atak"],o:"Sakin sularda saklanan, fırtınada açığa çıkar.",
+senaryo:`Alihan ekibinde kimin gerçekten yanında olduğunu bilmiyor — herkes yüzeyde uyumlu. Bir toplantıda kasıtlı olarak tartışmalı bir karar açıkladı: "Bu çeyrekten itibaren maaş ödemeleri ayın 5'inden 15'ine kayacak." Karar zaten gerçek değildi, sadece bir test. Yüzleri izledi: Mert yüzünü buruşturdu, sessizdi. Ezgi hemen "mantıklı patronum" dedi. Furkan bir saat sonra Slack'te "aramızda" bir grup oluşturup "çok yanlış" diye yazdı. Üç gün içinde Alihan kimin nerede durduğunu çıkarttı, "iptal" diye geri çekti.`,
+yasalar:"Yasa 39 ana. Yasa 14 (casus gibi) — provokasyon bir bilgi toplama aracı.",
+yuzey:"Yüzeyde 'karar değişebilir'. Altta tepkileri okumak için sahte bir bahane.",
+kritik:`Furkan'ın "aramızda" Slack grubu kurması. Sızdırılabilir bilgiyi yazılı yere bırakmak.`,
+simdi:`Furkan pozisyonundaysan: tartışmalı kararlara anında tepki verme. Beklemeyi öğren, 24 saat sonra konuş. Sular durulur, sen ortaya çıkmazsın. Anlık tepkiler kayıt bırakır — özellikle Slack'te.`},
+{n:40,t:"Bedavayı küçümse",c:["savunma"],o:"Bedava görünenin bedeli sonra ödenir, ve genellikle büyüktür.",
+senaryo:`Alihan bir gün sana: "Ramazan, geçen yıl çok çalıştın, sana özel bir bütçe açıyorum — 50 bin TL'lik kişisel eğitim bütçesi." Sen sevinerek teşekkür ettin, eğitimi seçtin, kullandın. Sekiz ay sonra hassas bir konu: bir tedarikçi şikâyetini Alihan kendi yöntemiyle çözmek istiyor, sen etik olarak uygun bulmuyorsun. Alihan: "Ramazan, sana eğitim bütçesini açan benim, bu konuda bana yardımcı olur musun?" Cümle nazik, mesaj net: hesap zamanı.`,
+yasalar:"Yasa 40 ana. Yasa 12 (seçici dürüstlük) — jest minnet üreten bir tuzak.",
+yuzey:"Yüzeyde 'cömert yönetici'. Altta hediye değil, kredidir — vadesi gelir.",
+kritik:`"Sana özel" bütçeyi kabul ettiğin an. Sorgulamadın — "neden şimdi, koşul ne?" demedin.`,
+simdi:`Eğitimin geri ödemesini somut katkıyla ekibe yap — aldığın eğitimi paylaş, herkesin gözünde "bütçe tüm ekibe yararlandı" algısı kur. Borç eşitlendiğinde Alihan'ın 'sana yatırım yaptım' kartı zayıflar. Bir sonraki cömertlikte "koşul nedir?" diye sor.`},
+{n:41,t:"Büyük adamın ayakkabılarına basma",c:["savunma"],o:"Bir efsanenin ardından gelen gölgesinde kaybolur.",
+senaryo:`Şirketin efsane Pazarlama Müdürü Cengiz Bey emekli oldu — 18 yıl, marka kişiliği, herkes onu seviyordu. Burak'ı onun yerine atadılar. Burak ilk gün Cengiz'in masasına oturdu, onun stiline benzemeye çalıştı, ekibini değiştirmedi, süreçlerine dokunmadı. Bir yıl boyunca ekip onu "eski Cengiz Bey'in tutarsız bir kopyası" olarak gördü. Toplantılarda "Cengiz Bey'in döneminde böyle olmazdı" cümlesi her ağızda dolaştı. Burak istifa etti, yerine gelen kişi ilk hafta tüm süreçleri değiştirdi — üç ayda ekip ona alıştı.`,
+yasalar:"Yasa 41 ana. Yasa 25 (yeniden yarat) — efsanenin ardına gelen yeni kimlik kurmak zorunda.",
+yuzey:"Yüzeyde 'saygılı halef'. Altta gölgesinde kaybolan halef — sürekli kıyaslanır, hep eksik kalır.",
+kritik:"İlk hafta. Cengiz'in masasına 'olduğu gibi' oturmak en pahalı hata.",
+simdi:`Büyük bir ismin ardına geliyorsan ilk işin değişiklik olsun — masanın yerini değiştir, takım toplantı saatini değiştir, küçük ama görünür ritüeller. Tarzı belirgin biçimde başkalaştır. Eski lider saygıyla anılsın, ama "bambaşka dönem" algısı kur.`},
+{n:42,t:"Çobanı vur, sürü dağılır",c:["atak"],o:"Bir grupta direnişin kaynağı genelde tek kişidir.",
+senaryo:`Ekipte bir homurdanma var — maaş artışları yetersiz, mesai uzun, yönetim uzak. Beş kişi sürekli aynı tonu yansıtıyor: Furkan, Burak, Kerem, Pınar, Mert. Alihan kim kaynak diye gözledi. Toplantılarda dikkat etti: ilk söylem Furkan'dan çıkıyor, diğerleri ardından geliyor. Furkan'ın bir başka şehirdeki ofise transferi planlandı — büyük müşteri, kıdem fırsatı, prestij. Furkan "fırsat" olarak kabul etti, gitti. Üç hafta içinde diğer dördünün tonu düzeldi.`,
+yasalar:"Yasa 42 ana. Yasa 18 (izolasyon) tersinden — direnişin lideri sosyal merkez, onu çıkarınca ağ çökmez ama yön kaybeder.",
+yuzey:"Yüzeyde 'beş kişi şikâyetçi'. Altta bir kişi ses, dördü yankı.",
+kritik:"Sen Burak ya da Kerem konumundaysan: Furkan'la görünür hizalanma seni de etkiler.",
+simdi:`Bir grupta ortak şikâyet yansıtıyorsanız, ses kimden çıkıyor dikkat et. Liderlik etiketi taşımıyorsan ama sesin liderle birleşiyorsa, lider hedef olduğunda sen de aynı kategoride hedef olursun.`},
+{n:43,t:"Kalpler ve akıllar üzerinde çalış",c:["iletisim"],o:"Korkuya dayanan otorite kısa ömürlü, sevgiye dayanan dayanıklıdır.",
+senaryo:`Cem ekibini sadece KPI'larla yönetti — aylık hedefler, raporlar, performans tabloları. Ekip teknik olarak işini yaptı. Kriz çıktığında — büyük bir müşteri sözleşmesi tehlike altında, üç gün içinde sunum hazırlanması gerek — Cem ekipten hafta sonu mesai istedi. Sessizlik. Kimse gönüllü olmadı, kimse "olur abi" demedi. Aynı dönem Selin ekibini her hafta 15 dakikalık bireysel sohbetlerle dinledi — herkesin ailesini, kişisel projesini, kariyer hayalini biliyordu. Onun krizinde ekip kendiliğinden gönüllü oldu, hatta tatilini iptal eden bile çıktı.`,
+yasalar:"Yasa 43 ana. Yasa 27 (inanma ihtiyacı) — bağlı insan lidere inanır, KPI'a inanmaz.",
+yuzey:"Yüzeyde 'profesyonel yönetim'. Altta krizde performans değil sadakat çalışır; sadakat KPI'dan inşa edilmez.",
+kritik:"Cem'in ekibe hiç bireysel ilgi göstermemiş olması. Birikim olmadı, çekiş olmadı.",
+simdi:`Yöneticilik yapıyorsan: haftada bir, 15 dakika her ekip üyesiyle iş dışı sohbet kur. Aile, tatil, hayaller. Bilgiyi sadakat sermayesi olarak biriktir; ihtiyaç olduğunda çekersin.`},
+{n:44,t:"Ayna etkisiyle silahsızlandır",c:["atak","savunma"],o:"Karşındakinin davranışını yansıtmak önce şaşırtır, sonra rahatsız eder.",
+senaryo:`Furkan ekibe agresif bir mail attı: "Bu raporda gözle görülür hatalar var, kim hazırladıysa bir daha incelesin, böyle iş gönderilmez." Mert yumuşak cevap yazdı: "Furkan, üzgünüm, hangi noktalar, detaylandırırsan hızlıca düzeltirim." Furkan daha da sertleşti: "Detaya girmeme gerek var mı, kalite sorunu var." Selin aynı agresyona aynı tonla cevap verdi: "Mert'in işine 'kalite sorunu' diyebilmek için spesifik bir nokta göstermen gerek, aksi halde mail başkalarına haksızlık." Furkan birden geri çekildi, özür diledi.`,
+yasalar:"Yasa 44 ana. Yasa 22 (teslim taktiği) tersinden — yumuşaklık teslim olarak okunur, agresyonu büyütür.",
+yuzey:"Yüzeyde 'sakin cevap krizi yumuşatır'. Altta saldırgan kişiyle yumuşak konuşmak teslim sinyali; aynı dilde yanıt eşitlik sinyalidir.",
+kritik:`Mert'in "üzgünüm" diye başlaması. İlk cümle pozisyonu belirledi.`,
+simdi:`Birisi agresif bir tonla yazıyorsa, aynı sertlikte yanıt ver — kibarlık değil, eşitlik. ${Q("Spesifik nokta göster, aksi halde toplu suçlama.")}Agresif kişi aynayı görünce çekilir.`},
+{n:45,t:"Değişim ihtiyacını vaaz et, ama yavaş reform yap",c:["iletisim","atak"],o:"Çok hızlı değişim en sadık olanları bile düşman eder.",
+senaryo:`Pazarlama bölümüne yeni bir müdür geldi — Hakan. İlk hafta toplantısı: "Arkadaşlar, biz burada her şeyi değiştireceğiz. Süreçler, ekipler, hedefler, hatta ofis düzeni." Eski ekip donuk dinledi. İki ay boyunca her değişiklik direnç görüyor. Hakan altıncı ayda istifa etti. Yerine Selin geldi. Selin ilk hafta: "Bu departmanın güzel bir kültürü var, ben sizden öğrenmeye geldim." Sonraki üç ay tek bir görünür değişiklik yapmadı. Altıncı aydan itibaren büyük yapısal değişiklikleri başlattı — kimse direnç göstermedi.`,
+yasalar:"Yasa 45 ana. Yasa 38 (başkaları gibi davran) — dış görünüş eski kültürle uyumlu, içeride değişim hazırlanıyor.",
+yuzey:"Yüzeyde 'iyi yönetici değişimi vaat eder'. Altta hızlı vaat = hızlı direnç, yavaş hareket = etkisiz direnç.",
+kritik:"Hakan'ın ilk toplantı cümlesi. İlk cümle herkesin savunmasını çekti.",
+simdi:`Yeni bir göreve geldiğinde "değiştireceğim" deme — "öğreneceğim" de. Üç ay gözle, üç ay küçük dokunuşlar yap, altıncı aydan sonra yapısal değişikliklere geç. Hiç kimse "biz değişiyor muyuz?" diye sormayacak.`},
+{n:46,t:"Asla fazla mükemmel görünme",c:["savunma","algi"],o:"Mükemmel olan kıskanılır; küçük kusurlar saldırıyı emer.",
+senaryo:`Ezgi her görevi zamanında, her sunumu kusursuz, hiçbir mola almadan, hiçbir hata yapmadan bitirdi. İki yıl boyunca performans tablosunda birinci sırada kaldı. Tüm ekip ona 'mesafeli, ulaşılmaz' olarak baktı. Alihan terfi konusunda onu atladı: "Ezgi çok iyi ama mesafeli, ekiple bağ kuramıyor, yönetici olamaz." Aynı dönem Pınar küçük hatalar yaptı, bazen "aman ya, çocuğun veli toplantısı çakıştı" diyerek geç kaldı. Performansı Ezgi kadar değildi — ama insandı. Yöneticilik pozisyonu Pınar'a gitti.`,
+yasalar:"Yasa 46 ana. Yasa 43 (kalpler) — mükemmellik bağ kurmaya engel.",
+yuzey:"Yüzeyde 'mükemmellik ödüllendirilir'. Altta mükemmel olan ulaşılmaz, ulaşılmaz olan tehdit ya da yabancı.",
+kritik:"İki yıl boyunca tek bir 'insani' an göstermemesi. Mükemmelliği rutin haline getirmesi.",
+simdi:`Bilinçli olarak küçük zayıflıklar göster — "bu hafta biraz dağılmıştım", "pazartesi geç geldim çünkü..." tarzı küçük insanlıklar. Performansı bozma, sadece kıyafeti gevşet. Ulaşılabilirlik bir strateji.`},
+{n:47,t:"Hedefini aşma; zaferinde nerede duracağını bil",c:["savunma"],o:"Hedefi aşmak, hedefe ulaşmadan kaybetmekten daha tehlikelidir.",
+senaryo:`Burak bir iç çatışmada rakibi Mert'i yendi — Mert'in projesi iptal oldu, Burak'ın projesi öne çıktı. Köşeye sıkışan Mert toplantıda özür diledi, sessizleşti, geri çekildi. Burak orada durmadı: Sonraki üç toplantıda Mert'in eski hatalarını gündeme getirmeye devam etti: "Hatırlarsın, geçen sene de benzer bir önerin tutmamıştı." Üçüncü toplantıdan sonra ekibin sempatisi Burak'tan uzaklaştı, Mert'e kaydı. Alihan bir cumartesi mesajı attı: "Burak, sen zaten kazanmıştın, niye üstüne basıyorsun?"`,
+yasalar:"Yasa 47 ana. Yasa 15 (düşmanı ez) ile çelişiyor görünür ama değil — 'ez' onu işlemez hale getirmektir; 'küçük düşür' ona sempati kazandırır.",
+yuzey:"Yüzeyde 'kazandığımı gösterdim'. Altta zafer sergisi, daha büyük bir kayıp — sempati kayması.",
+kritik:"Zafer toplantısının ikinci kez tekrarlanması. Bir kez yetti, ikincisi zarar.",
+simdi:`Bir savaşta kazandığında, yenilen geri çekiliyorsa orada dur. Hatta ${Q("İyi tartıştık, gelecek toplantıda farklı bakarım.")}deyip el sıkış. Sempati ekibin parasıdır — tek kazançla en pahalıya satın alırsın, küçük düşürmeyle çabuk kaybedersin.`},
+{n:48,t:"Şekilsizliği benimse",c:["savunma","algi"],o:"Belirli bir şekle giren hedef olur; akışkan olan yakalanmaz.",
+senaryo:`Cem yedi yıldır "sosyal medya uzmanı Cem" olarak tanınıyordu — tek bir alan, tek bir kimlik. Sektör daraldı; dijital pazarlama bütçeleri kısıldı, sosyal medya yatırımları yarıya indi. Cem'in pozisyonu küçüldü, sonra kaldırıldı. Selin aynı süre içinde performans, içerik, veri, marka iletişimi, müşteri deneyimi gibi farklı alanlarda çalıştı — hiçbirinde 'uzman' etiketi taşımadı, hep 'bütünsel bakan kişi' olarak göründü. Sektör daralırken Selin yeni 'müşteri deneyimi liderliği' rolüne kaydı; şirketin onu yeniden tanımlaması kolay oldu.`,
+yasalar:"Yasa 48 ana. Yasa 25 (yeniden yarat) — şekilsizlik periyodik yeniden yaratmanın kolaylaştırıcısı.",
+yuzey:"Yüzeyde 'uzman değerli'. Altta tek uzmanlık tek pazara bağımlı; pazar düştüğünde uzman da düşer.",
+kritik:"Yedi yıl boyunca aynı tek kimliği taşımak. Üç-dört yılda kimlik genişlemesi gerekirdi.",
+simdi:`Uzman olduğun alanı bırakma ama ona ikinci, üçüncü bir kas ekle. Her yıl yeni bir alanda görünür çalışma yap. 'Sosyal medyacı' yerine 'pazarlama düşünürü' ol; 'gümrükçü' yerine 'operasyon mimarı' ol. Etiketi geniş tut.`}
+];
+function renderLaws(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  const filter=document.querySelector('.chip.active').dataset.filter;
+  const list=document.getElementById('list');
+  const counter=document.getElementById('counter');
+  const empty=document.getElementById('empty');
+  const normalize=s=>s.toLowerCase().replace(/ı/g,'i').replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c');
+  const qN=normalize(q);
+  let visible=0;
+  const html=LAWS.map(l=>{
+    const blob=normalize(`${l.t} ${l.o} ${l.senaryo} ${l.yasalar} ${l.yuzey} ${l.kritik} ${l.simdi}`);
+    const matchSearch=!qN||blob.includes(qN);
+    const matchFilter=filter==='all'||l.c.includes(filter);
+    const show=matchSearch&&matchFilter;
+    if(show)visible++;
+    if(!show)return '';
+    const tagsHtml=l.c.map(t=>`<span class="tag">${t}</span>`).join('');
+    return `<article class="law" data-n="${l.n}">
+      <div class="law-head">
+        <div class="law-numeral">${ROMAN[l.n-1]}</div>
+        <div class="law-meta">
+          <h2 class="law-title">${l.t}</h2>
+          <p class="law-ozet">${l.o}</p>
+        </div>
+        <div class="law-toggle">+</div>
+      </div>
+      <div class="law-body"><div class="law-body-inner">
+        <div class="tags">${tagsHtml}</div>
+        <div class="senaryo-block">
+          <div class="section-heading">Senaryo</div>
+          <p class="senaryo-text">${l.senaryo}</p>
+        </div>
+        <div class="cevap-block">
+          <div class="section-heading">Cevap</div>
+          <div class="cevap-grid">
+            <div class="cevap-item"><div class="cevap-label lbl-yasalar">Hangi yasalar</div><div class="cevap-text">${l.yasalar}</div></div>
+            <div class="cevap-item"><div class="cevap-label lbl-yuzey">Yüzey / Alt</div><div class="cevap-text">${l.yuzey}</div></div>
+            <div class="cevap-item"><div class="cevap-label lbl-kritik">Kritik an</div><div class="cevap-text">${l.kritik}</div></div>
+            <div class="cevap-item"><div class="cevap-label lbl-simdi">Şimdi ne yapmalı</div><div class="cevap-text">${l.simdi}</div></div>
+          </div>
+        </div>
+      </div></div>
+    </article>`;
+  }).join('');
+  list.innerHTML=html;
+  counter.textContent=visible===48?'48 yasa':`${visible} / 48 yasa`;
+  empty.classList.toggle('show',visible===0);
+  document.querySelectorAll('.law-head').forEach(h=>{
+    h.addEventListener('click',()=>h.parentElement.classList.toggle('open'));
+  });
+}
+document.getElementById('search').addEventListener('input',e=>{
+  document.getElementById('clear').classList.toggle('show',e.target.value.length>0);
+  renderLaws();
+});
+document.getElementById('clear').addEventListener('click',()=>{
+  document.getElementById('search').value='';
+  document.getElementById('clear').classList.remove('show');
+  renderLaws();
+});
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    renderLaws();
+  });
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement!==document.getElementById('search')){e.preventDefault();document.getElementById('search').focus();}
+  if(e.key==='Escape')document.getElementById('search').blur();
+});
+renderLaws();
+</script>
+</body>
+</html>
