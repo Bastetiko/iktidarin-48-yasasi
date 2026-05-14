@@ -21,6 +21,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16
 .hero-ornament{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold-dim);margin-top:40px}
 .hero-ornament .line{height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
 .hero-ornament .diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.tabs{max-width:920px;margin:36px auto 0;padding:0 28px;display:flex;gap:0;border-bottom:1px solid var(--border)}
+.tab{flex:1;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-mute);font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.4vw,22px);padding:16px 12px;cursor:pointer;transition:all 0.22s;letter-spacing:0.01em;margin-bottom:-1px}
+.tab:hover{color:var(--text-dim)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab .tab-sub{display:block;font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;margin-top:4px;color:var(--text-mute)}
+.tab.active .tab-sub{color:var(--gold-dim)}
 .toolbar-wrap{position:sticky;top:0;z-index:50;background:rgba(16,13,8,0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);margin-top:24px}
 .toolbar{max-width:920px;margin:0 auto;padding:18px 28px}
 .search-wrap{position:relative;margin-bottom:14px}
@@ -76,7 +82,7 @@ footer .ornament{color:var(--gold-dim);margin-bottom:16px;font-size:18px}
 .ti{display:inline-block;font-style:normal}
 .ti-search::before{content:'⌕'}
 .ti-x::before{content:'×'}
-@media(max-width:680px){.hero{padding:56px 20px 30px}.toolbar{padding:14px 20px}.laws{padding:24px 20px 80px}.law-head{grid-template-columns:48px 1fr 20px;gap:14px;padding:22px 4px}.law-numeral{font-size:22px}.law-title{font-size:19px}.law-ozet{font-size:14px}.law-body-inner{padding:0 4px 32px 62px}.senaryo-text{font-size:17px}.cevap-item{grid-template-columns:1fr;gap:6px}.cevap-label{padding-top:0}.cevap-text{font-size:14.5px}.filters{flex-direction:column;align-items:flex-start}.counter{align-self:flex-end}}
+@media(max-width:680px){.hero{padding:56px 20px 30px}.toolbar{padding:14px 20px}.laws{padding:24px 20px 80px}.law-head{grid-template-columns:48px 1fr 20px;gap:14px;padding:22px 4px}.law-numeral{font-size:22px}.law-title{font-size:19px}.law-ozet{font-size:14px}.law-body-inner{padding:0 4px 32px 62px}.senaryo-text{font-size:17px}.cevap-item{grid-template-columns:1fr;gap:6px}.cevap-label{padding-top:0}.cevap-text{font-size:14.5px}.filters{flex-direction:column;align-items:flex-start}.counter{align-self:flex-end}.tabs{padding:0 16px;margin-top:24px}.tab{padding:14px 6px}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .hero>*{animation:fadeUp 0.7s ease both}
 .hero-eyebrow{animation-delay:0.05s}
@@ -89,9 +95,13 @@ footer .ornament{color:var(--gold-dim);margin-bottom:16px;font-size:18px}
 <section class="hero">
   <div class="hero-eyebrow">Robert Greene · 1998</div>
   <h1>İktidarın <em>48 Yasası</em></h1>
-  <p class="hero-sub">İş yeri için 48 hikâye, 48 katmanlı analiz. Patron: Alihan. Kahraman: sen.</p>
+  <p class="hero-sub">İki bölüm, 96 senaryo. Bölüm I: güç nasıl kurulur. Bölüm II: rakiple kafa kafaya çatışma. Patron: Alihan. Kahraman: sen.</p>
   <div class="hero-ornament"><span class="line"></span><span class="diamond"></span><span class="line"></span></div>
 </section>
+<nav class="tabs">
+  <button class="tab active" data-set="isyeri">İş Yeri<span class="tab-sub">Güç ve Konum</span></button>
+  <button class="tab" data-set="rakip">Rakip Çatışması<span class="tab-sub">Birebir Rekabet</span></button>
+</nav>
 <div class="toolbar-wrap"><div class="toolbar">
   <div class="search-wrap">
     <span class="ti ti-search"></span>
@@ -409,16 +419,314 @@ yuzey:"Yüzeyde 'uzman değerli'. Altta tek uzmanlık tek pazara bağımlı; paz
 kritik:"Yedi yıl boyunca aynı tek kimliği taşımak. Üç-dört yılda kimlik genişlemesi gerekirdi.",
 simdi:`Uzman olduğun alanı bırakma ama ona ikinci, üçüncü bir kas ekle. Her yıl yeni bir alanda görünür çalışma yap. 'Sosyal medyacı' yerine 'pazarlama düşünürü' ol; 'gümrükçü' yerine 'operasyon mimarı' ol. Etiketi geniş tut.`}
 ];
+const RAKIP_LAWS=[
+{n:1,t:"Ustanı asla gölgede bırakma",c:["savunma"],o:"Rakip seni 'patrona meydan okuyan' diye çerçevelerse, kavgayı patronla yaparsın.",
+senaryo:`Sen ve Murat aynı müdür yardımcılığı için yarışıyorsunuz. Strateji toplantısında Alihan bir pazar tahmininde bulundu; sen nazikçe düzelttin, rakamın yanlış olduğunu kanıtladın. Murat hiçbir şey demedi, sadece gülümsedi. Toplantıdan sonra Murat, Alihan'ın yanına gitti: "Patronum, Tolga'nın analizi iyiydi de, sizi herkesin önünde düzeltmesi biraz... neyse, gençlik." Bir cümleyle Murat seni 'patrona kafa tutan' kategorisine koydu — kendi eli hiç değmeden.`,
+yasalar:"Yasa 1 ana. Yasa 7 — Murat senin emeğini (doğru analizi) senin aleyhine çevirdi, krediyi ise 'olgun olan benim' diye kendine yazdı.",
+yuzey:"Yüzeyde Murat seni savunuyor gibi ('analizi iyiydi'). Altta seni Alihan'ın gözünde tehdit olarak konumlandırıyor — rekabette rakibini patrona şikayet etmezsin, patrona 'sorun' gibi gösterirsin.",
+kritik:"Alihan'ı herkesin önünde düzelttiğin an. Haklı olman önemli değildi; Murat'a kullanacağı malzemeyi sen verdin.",
+simdi:`Alihan'la birebir konuş, savunmaya geçmeden: ${Q("Patronum, toplantıda araya girmem yersizdi, doğru olanı size özel iletmeliydim. Bundan sonra böyle.")}Murat'ın çerçevesini kabul etmeden, onu konuşma dışı bırakarak çök. Bir daha asla rakibinin önünde patrona malzeme verme.`},
+{n:2,t:"Dostlara fazla güvenme, düşmanları kullanmayı öğren",c:["iletisim"],o:"Rekabette en büyük sızıntı, sırdaş sandığın kişidir.",
+senaryo:`Terfi yarışında en büyük rakibin Selin. İçini dökmek için Cem'e gittin — yıllardır arkadaşsınız: "Cem, Selin'in bu işi alacağından korkuyorum, benim sayısal raporlamada açığım var, biliyorum." Cem dinledi, anlayışla başını salladı. İki hafta sonra Alihan bir toplantıda sana döndü: "Sinan, sayısal raporlama tarafını geliştirmen lazım, birkaç kişiden duydum." Cem 'birkaç kişiden' biriydi — kötü niyetinden değil, ağzından kaçırdığından.`,
+yasalar:"Yasa 2 ana. Yasa 4 — rakip varken zayıflığını ağzından çıkarmak, az konuşma kuralının en pahalı ihlali.",
+yuzey:"Yüzeyde 'güvenilir dosta içini dökmek'. Altta rekabet ortamında hiç kimse nötr değildir; en masum dost bile bilgiyi taşır, çünkü bilgi sosyal para birimidir.",
+kritik:"Kendi açığını Cem'e söylediğin an. Rakip varken zayıf noktanı tek bir kişiye bile söylemek, onu herkese söylemektir.",
+simdi:`Zayıflığını kimseyle paylaşma — sessizce kapat. Sayısal raporlamada bir kurs al, bir sertifika çıkar, kimseye söylemeden. Cem'le dostluğunu sürdür ama iş rekabetini içeren hiçbir şeyi anlatma. Sırdaş aradığında bir insan değil, bir not defteri kullan.`},
+{n:3,t:"Niyetlerini gizle",c:["atak","savunma"],o:"Rakip hamleni önceden bilirse, sen varmadan oraya varır.",
+senaryo:`Açılacak Bölge Müdürlüğü için Murat'la yarıştığını biliyorsun. Bir öğle yemeğinde Murat masum masum sordu: "Sen bu bölge işine girer misin? Ben emin değilim açıkçası." Sen rahatladın, açıldın: "Açıkçası evet, hazırlık bile yapıyorum, geçen hafta saha ziyaretine gittim." Murat "ben pek hevesli değilim" dedi. Üç hafta sonra Murat'ın da aynı pozisyon için üç saha ziyareti yaptığını, bir sunum hazırladığını öğrendin — senin tüm hamlelerini bilerek, hepsinin bir adım önünde.`,
+yasalar:"Yasa 3 ana. Yasa 21 — Murat 'ben hevesli değilim' diyerek salağı oynadı, seni açılmaya çekti.",
+yuzey:"Yüzeyde 'iki meslektaş kariyer sohbeti yapıyor'. Altta Murat istihbarat topluyor; 'ben girmem' demesi seni rahatlatıp konuşturmak için kurulmuş bir tuzak.",
+kritik:`Murat'ın "ben emin değilim" repliğine güvenip kendi planını açtığın an. Rakip 'ben yokum' dediğinde, tam da o an en tehlikelidir.`,
+simdi:`Bundan sonra Murat'a niyetini sıfır göster. O sorduğunda sen de belirsizleş: ${Q("Bilmiyorum, bakacağım, şu an başka işler var kafamda.")}Saha ziyaretlerini, sunum hazırlığını sessizce yap. Rakip senin planını değil, sadece ortaya çıkan sonucu görsün.`},
+{n:4,t:"Gerekenden az konuş",c:["iletisim"],o:"Rekabette konuşan taraf, susan tarafa cephane verir.",
+senaryo:`Selin'le ikiniz aynı projenin liderliğine adaysınız. Karar toplantısında Alihan ikinizden de vizyonunuzu istedi. Sen heyecanla 9 dakika konuştun — her detayı, her riski, her olası sorunu anlattın. Selin 90 saniye konuştu: "Üç ayda devreye alırım, ilk ay pilot, sonuçları sizinle haftalık paylaşırım. Riskleri yazılı bir nota döktüm, masanızda." Alihan Selin'i seçti. Sonra sana: "Berk, sen konuyu çok iyi biliyorsun ama Selin daha... net."`,
+yasalar:"Yasa 4 ana. Yasa 28 — Selin'in kısalığı aynı zamanda bir cesaret gösterisiydi; az ama kesin konuştu.",
+yuzey:"Yüzeyde 'konuya hakimiyet göstermek'. Altta uzun konuşma hakimiyeti değil tereddüdü gösterir; her riski sayman, Alihan'ın kafasında 'bu iş zor, bu adam emin değil' izi bıraktı.",
+kritik:"Dokuzuncu dakikaya girdiğin an. Üçüncü dakikadan sonra söylediğin her cümle Selin'in lehine çalıştı.",
+simdi:`Bir sonraki kapışmada cevabını üç cümleye indir: ne yapacaksın, ne zaman, nasıl raporlayacaksın. Detayı yazılı bir eke koy, sözlü tutma. Rakibin karşısında az konuş — boşluğu o doldursun, hatayı o yapsın.`},
+{n:5,t:"Her şey itibarına bağlıdır, onu canın gibi koru",c:["savunma"],o:"Rakip seninle yarışamıyorsa, itibarınla yarışır.",
+senaryo:`Murat seninle açık işte yarışamıyor — senin operasyon sonuçların somut. Bu yüzden başka bir yol seçti. Toplantılarda, kulislerde, küçük dokunuşlarla: "Emre iyidir de, biraz tek başına çalışıyor, ekip oyuncusu mu emin değilim", "geçen seferki gecikmede biraz onun da payı vardı galiba." Hiçbiri büyük bir suçlama değil — ama altı ayda Alihan'ın kafasında 'Emre yetenekli ama ekip insanı değil' algısı yerleşti. Terfi 'ekip insanı' Murat'a gitti.`,
+yasalar:"Yasa 5 ana. Yasa 42 — Murat doğrudan saldırmadı, küçük küçük itibar tohumları ekti; çobanı vurmak yerine sürünün algısını zehirledi.",
+yuzey:"Yüzeyde 'masum gözlem paylaşımları'. Altta sistematik bir itibar aşındırma kampanyası; tek tek zararsız, toplamı öldürücü.",
+kritik:"İlk 'ekip oyuncusu değil' iması ortaya atıldığında sessiz kalman. İtibar saldırısı erken karşılanmazsa, geç kalındığında kanıtlamak imkansızdır.",
+simdi:`İtibarı tersine çevir — söyleyerek değil, görünür kılarak. Ekip üyelerine açıkça destek ver, ortak başarıları öne çıkar, "bunu Ezgi'yle birlikte çözdük" de. Üç ay görünür ekip insanı ol. Murat'la yüzleşme; algıyı kanıtla, tartışma.`},
+{n:6,t:"Dikkati her ne pahasına olursa olsun çek",c:["algi"],o:"İki rakip eşit çalışıyorsa, görünür olan kazanır.",
+senaryo:`Sen ve Furkan aynı kıdemdesiniz, benzer işler yapıyorsunuz. Sen işini sessizce, eksiksiz yapıyorsun. Furkan her bitirdiği işi bir 'mini sunum'a çeviriyor — Alihan'a "şunu tamamladım, 5 dakikanız var mı" diyor, ekip kanalına özet geçiyor. Yıl sonunda ikinizin de çıktısı neredeyse aynı. Ama Alihan'ın aklında Furkan'ın 11 işi var, senin 3 işin. Çünkü Furkan'ınkiler sahnelendi, seninkiler arşivde kaldı.`,
+yasalar:"Yasa 6 ana. Yasa 37 — Furkan her işi bir gösteriye çeviriyor; çıktı aynı, ama onunki görülüyor.",
+yuzey:"Yüzeyde 'işini abartmadan yapan olgun çalışan'. Altta rekabette görünmezlik bir erdem değil, bir kayıp; rakip seninle aynı işi yapıp üstüne sahneliyorsa, sen yarışı sahnede kaybediyorsun.",
+kritik:`"İyi iş kendini gösterir" varsayımın. Rakip ortamında iş kendini göstermez — sen gösterirsin ya da rakibin seninkini gölgeler.`,
+simdi:`Furkan'ın oyununu küçümseme, öğren. Her tamamladığın anlamlı işi kısa bir özetle görünür kıl — abartma, ama sahiplen. Ayda bir Alihan'a "şu işi kapattım, sonuçları şöyle" de. Görünürlük rakiple arandaki eşitliği bozar.`},
+{n:7,t:"Başkalarının emeğini kullan, krediyi sen al",c:["atak"],o:"Rakip senin işini 'ortak iş'e çevirip krediyi paylaşmaya çalışır.",
+senaryo:`Selin'le farklı projelerdesiniz ama aynı terfi havuzundasınız. Senin yürüttüğün otomasyon projesi başarılı oldu. Selin bir toplantıda araya girdi: "Bu arada Kaan'ın projesinde ben de başında birkaç fikir vermiştim, güzel olmuş gerçekten." Aslında sadece bir kahve molasında laf olsun diye konuşmuştunuz. Ama 'ben de fikir verdim' cümlesi havada kaldı, Alihan'ın aklında 'ortak iş' gibi yer etti. Terfi değerlendirmesinde proje ikinizin ortak başarısı olarak okundu.`,
+yasalar:"Yasa 7 ana. Yasa 12 — Selin'in 'güzel olmuş gerçekten' iltifatı, krediye ortak olma hamlesini tatlı bir jest gibi gösteren bir paravan.",
+yuzey:"Yüzeyde 'meslektaşını öven cömert bir yorum'. Altta krediye sonradan ortak olma operasyonu; iltifat, sahiplenmeyi gizleyen ambalaj.",
+kritik:`Selin "ben de fikir vermiştim" dediğinde gülümseyip geçiştirmen. O an net bir düzeltme gerekiyordu, sonra çok geç.`,
+simdi:`Bir daha olursa, kibarca ama net çerçeveyi düzelt: ${Q("Selin'in genel yorumu kıymetliydi, projenin tasarımı ve yürütmesi bana aitti, ekipten de Ezgi destek verdi.")}Geçmiş için: projenin tüm aşamalarını tarihli kayıtla Alihan'a hatırlat, sahipliği sessizce geri al.`},
+{n:8,t:"İnsanları sana gelmeye zorla",c:["atak"],o:"Rekabette inisiyatifi kovalayan değil, bekleten kazanır.",
+senaryo:`Boş bir kıdemli pozisyon var. Sen Alihan'a iki kez gittin: "Patronum, bu pozisyona talibim, ne yapmam gerekir?" Alihan "bakacağız" dedi. İstekli görünüyorsun — fazla istekli. Murat hiç talep etmedi. Bunun yerine sessizce öyle işler yaptı ki, Alihan onu kendi çağırdı: "Murat, seni bu pozisyon için düşünüyorum, ne dersin?" Aynı pozisyon, ama Murat çağrıldı, sen yalvardın gibi göründü. Çağrılan pazarlık gücüne sahiptir; talip olan değil.`,
+yasalar:"Yasa 8 ana. Yasa 16 — Murat istekliliğini göstermeyerek değer kazandı; sen erişilebilirliğini göstererek değer kaybettin.",
+yuzey:"Yüzeyde 'hedefini açıkça söyleyen kararlı çalışan'. Altta rekabette peşine düşmek zayıflık sinyali; rakip seni kovalarken görürse, Alihan da öyle görür.",
+kritik:"İkinci kez Alihan'a 'talibim' demeye gittiğin an. Bir kez niyet beyan etmek yeterliydi; ikincisi yalvarmaya dönüştü.",
+simdi:`Talep etmeyi bırak, çağrılacak sebebi yarat. Pozisyonun gerektirdiği işi, kimse istemeden, görünür biçimde yap. Alihan'ın 'bu işi zaten o yapıyor' demesini sağla. Sonra konuşma sana gelir — sen ona gitmezsin.`},
+{n:9,t:"Eylemlerinle kazan, asla tartışmayla değil",c:["iletisim"],o:"Rakibinle Alihan'ın önünde tartışırsan, ikiniz de küçülür — o kazanır.",
+senaryo:`Toplantıda Murat senin bir önerine itiraz etti, yanlış olduğunu ima etti. Sen savundun, o üstüne gitti, sen sesini yükselttin. On dakika boyunca ikiniz Alihan'ın önünde didiştiniz. Alihan sonunda "tamam, ikiniz de sakin olun, sonra konuşuruz" dedi. O toplantıdan ne senin önerin çıktı ne Murat'ınki — sadece 'ikisi de geçimsiz' algısı çıktı. Selin bütün bunları izledi, hiç karışmadı; bir hafta sonra kendi önerisini sessizce uygulayıp sonucu gösterdi.`,
+yasalar:"Yasa 9 ana. Yasa 47 — Murat seni tartışmaya çekerek zaten kazanmıştı; sen tartışmayı sürdürerek onun zaferini büyüttün.",
+yuzey:"Yüzeyde 'haklı olduğun fikri savunmak'. Altta rakiple açık tartışma her zaman kaybedilir — kazansan bile 'kavgacı' olursun, asıl ödülü izleyen üçüncü kişi (Selin) alır.",
+kritik:"Murat'ın itirazına sesini yükselterek karşılık verdiğin an. İtirazı not edip 'sonra kanıtlarım' diye geçmeliydin.",
+simdi:`Murat seni tartışmaya çektiğinde girme: ${Q("İyi bir nokta, ben de bunu test edip sonucu paylaşırım.")}Sonra önerini sessizce uygula, sonucu Alihan'a göster. Rakiple sözle değil, sonuçla yarış. Tartışma onun sahası, sonuç senin.`},
+{n:10,t:"Mutsuz ve şanssızlardan kaç",c:["savunma"],o:"Düşüşteki bir rakiple yakın görünmek, onun düşüşüne ortak olmaktır.",
+senaryo:`Bir zamanlar güçlü olan Kerem, Alihan'la arası bozulduğundan beri düşüşte — projeleri elinden alınıyor, toplantılara çağrılmıyor. Sen ona acıdın, yanında oturmaya, öğle yemeklerine birlikte gitmeye devam ettin. Murat ise Kerem'den nazikçe uzaklaştı. Altı ay sonra yeni bir fırsat dağıtımında Alihan, Kerem'in 'çevresini' de aynı torbaya koydu — "o grup biraz moralsiz." Sen o gruptaydın. Murat değildi.`,
+yasalar:"Yasa 10 ana. Yasa 20 — Kerem batan tarafken ona görünür biçimde bağlı kalmak, taraf seçmenin en kötü versiyonu.",
+yuzey:"Yüzeyde 'zor günde dostunu yalnız bırakmamak'. Altta rekabet ortamında yöneticiler insanları kümeler halinde okur; düşüşteki kümede görünmek, kendi yükselişini onun düşüşüne zincirler.",
+kritik:"Kerem belirgin biçimde düşüşe geçtikten sonra bile günlük görünür yakınlığı sürdürmen. İnsani bağ kalabilir; görünür mesai-içi yakınlık değil.",
+simdi:`Kerem'e insani desteğini özelde sürdür ama mesai içi görünür kümelenmeyi azalt. Yüksek performanslılarla, yükselenlerle de görün. Acımasızlık değil bu — rekabette algı kümeler üzerinden işliyor, sen hangi kümede görünüyorsan osun.`},
+{n:11,t:"İnsanları sana bağımlı tut",c:["atak"],o:"Rakibinin yapamadığı bir şeyi sen yapabiliyorsan, yarış biter.",
+senaryo:`Sen ve Murat çok benzersiniz — aynı işler, aynı beceriler, ikiniz de yer değiştirilebilir. Bu yüzden rekabet bıçak sırtı, çünkü Alihan için ikiniz de 'değiştirilebilir' kategorisinde. Sonra sen bir şey yaptın: gümrük mevzuatındaki yeni e-belge sistemine kimsenin anlamadığı kadar hakim oldun, ekibin tek 'gidilecek kişisi' sen oldun. Murat hâlâ genel bir oyuncu. Bir sonraki kritik dönemde Alihan Murat'ı değil seni korudu — çünkü sen artık bir 'tekil yetenek'sin, o bir 'benzer'.`,
+yasalar:"Yasa 11 ana. Yasa 48 — Murat şekilsiz ve değiştirilebilir kaldı; sen kendini vazgeçilmez bir uzmanlığa demirledin.",
+yuzey:"Yüzeyde 'iki yetkin çalışanın adil rekabeti'. Altta benzerlik rekabette ölümcül — Alihan ikinizden birini seçecekse, benzersiz olanı tutar, değiştirilebilir olanı feda eder.",
+kritik:"Yok — bu doğru hamlenin senaryosu. Murat'la 'benzer' kaldığın her ay riskti; uzmanlaşarak o riskten çıktın.",
+simdi:`Uzmanlığını derinleştir ve onu kurumun bağımlı olduğu bir noktaya yerleştir. Ama tamamen kapatma — bilgini paylaşır görün, kritik kısmı kendinde tut. Rakibinle arandaki fark 'benzer değiliz' olduğunda, rekabet senin lehine biter.`},
+{n:12,t:"Seçici dürüstlük ve cömertlikle silahsızlandır",c:["atak","iletisim"],o:"Rakibine beklenmedik bir cömertlik, onun savunmasını çökertir.",
+senaryo:`Murat'la kıyasıya yarışıyorsunuz, herkes bunu biliyor. Bir gün Murat'ın bir sunumunda ciddi bir veri hatası fark ettin — toplantıda patlasa Murat küçük düşecek. Beklenen hamle: susup bırakmak, batsın. Sen tersini yaptın: toplantıdan önce Murat'a özelden yazdın, "şu slattaki rakam yanlış görünüyor, kontrol et." Murat şaşırdı, düzeltti. O günden sonra Murat sana karşı eski hıncıyla oynayamadı — çünkü ona bir borç bağladın, üstelik ucuza.`,
+yasalar:"Yasa 12 ana. Yasa 2 — bir rakibi, beklenmedik bir iyilikle yarı-müttefike çevirmek; düşmanı kullanmanın en zarif biçimi.",
+yuzey:"Yüzeyde 'centilmenlik, dürüstlük'. Altta hesaplı bir hamle — küçük, ucuz bir iyilikle rakibin sana karşı acımasız oynamasını ahlaken zorlaştırdın; onu psikolojik borç altına soktun.",
+kritik:"Yok — bu hamlenin kendisi doğru. Tek risk: bunu zaafından değil, gücünden yaptığını belli etmek; yalvarır gibi değil, üstten ve rahat.",
+simdi:`Bu jesti ara sıra, hesaplı kullan — her seferinde değil, etkisini yitirir. Büyük çatışma anında değil, küçük fırsatlarda yap. Rakibini tam ezemeyeceğin durumlarda, onu borçlandırarak nötralize et.`},
+{n:13,t:"Yardım isterken çıkara seslen, merhamete değil",c:["iletisim"],o:"Bir iç müttefik kazanmak istiyorsan, ona ne kazandıracağını göster.",
+senaryo:`Terfi yarışında Murat'ın önüne geçmek için İK'dan Aslı Hanım'ın desteğine ihtiyacın var — değerlendirme sürecinde sözü geçiyor. Aslı'ya gittin: "Aslı Hanım, bu terfiyi gerçekten çok istiyorum, yıllardır emek veriyorum, bir destek olur mu?" Aslı kibarca "süreç objektif Onur" dedi, mesafeli kaldı. Selin ise Aslı'ya farklı gitti: "Aslı Hanım, yeni pozisyonda İK süreçlerini sahayla entegre etmek istiyorum, sizin ekibe yükü azaltacak bir model var kafamda — bunu sizinle geliştirebilirim." Aslı, Selin'in arkasında durdu.`,
+yasalar:"Yasa 13 ana. Yasa 9 — Selin merhamet dilenmedi, Aslı'ya somut bir kazanç gösterdi; sonuç vaadiyle kazandı, ricayla değil.",
+yuzey:"Yüzeyde 'hak ettiğini dürüstçe istemek'. Altta iç rekabette müttefik, senin emeğine acıdığı için değil, senin yükselişinden kendi çıkarı olduğu için yanında durur.",
+kritik:`"Yıllardır emek veriyorum" cümlesi. Bu Aslı'nın umurunda değil; onun umurunda olan, senin yükselişin ona ne sağlayacağı.`,
+simdi:`Aslı'ya yeniden git, çerçeveyi değiştir: ${Q("Aslı Hanım, yeni pozisyonda İK'nın işini kolaylaştıracak bir raporlama köprüsü kurmak istiyorum — sizinle birlikte tasarlayabiliriz.")}Her potansiyel müttefike sor: bu kişi benim kazanmamdan ne kazanır? Cevabı onun diliyle söyle.`},
+{n:14,t:"Dost gibi davran, casus gibi çalış",c:["atak","iletisim"],o:"Rakibinin planını bilmek, onu hamleden önce etkisiz kılar.",
+senaryo:`Selin'le terfi yarışındasın. Selin sosyal, rahat biri — sık sık seninle sohbet ediyor, kahve içiyor. Sen bu sohbetleri 'dostluk' sanıyorsun ve rahatça konuşuyorsun: hangi projeye odaklandığını, Alihan'a ne sunmayı planladığını, zayıf gördüğün noktaları. Selin ise sana hiç net bir şey söylemiyor — hep genel, hep belirsiz. Sen ona haritan açıyorsun; o sana sis veriyor. Terfi gününde Selin senin sunmayı planladığın fikrin bir adım gelişmişini sunduğunda anladın.`,
+yasalar:"Yasa 14 ana. Yasa 3 — Selin niyetini gizledi, seni niyetini açmaya çekti; casusluk ve gizlilik aynı anda.",
+yuzey:"Yüzeyde 'iki meslektaşın sıcak dostluğu'. Altta tek yönlü istihbarat akışı; sohbet senin için muhabbet, onun için veri toplama.",
+kritik:"Selin'in sürekli belirsiz kaldığını fark etmemen. Karşı taraf hep genel konuşup sana hep net sorular soruyorsa, o sohbet bir dostluk değil bir görüşmedir.",
+simdi:`Selin'le ilişkiyi kesme — bilgi akışını tersine çevir. Sen de genel konuş, net soruları nazikçe geçiştir, onun planını öğrenmeye çalış. Rekabette sıcaklık devam edebilir ama bilgi tek yönlü akmamalı; ya çift yönlü, ya kapalı.`},
+{n:15,t:"Düşmanını tamamen ez",c:["atak"],o:"Rakibini yarı yenmek, ona intikam için zaman tanımaktır.",
+senaryo:`Bir proje çekişmesinde Murat'ı geçtin — senin yaklaşımın kabul edildi, onunki rafa kalktı. Murat geri çekildi ama tam yenilmedi; hâlâ ekipte, hâlâ Alihan'a yakın, hâlâ bir sonraki çekişmeyi bekliyor. Sen 'kazandım, gerisi önemli değil' diye rahatladın, takibi bıraktın. Murat altı ay sessiz kaldı, ittifaklarını tazeledi, senin bir gecikmeni bekledi — ve geldiğinde, o küçük gecikmeyi Alihan'ın gözünde bir 'güven sorununa' çevirdi. Yarım bıraktığın rakip, en kötü zamanda tam güçle döndü.`,
+yasalar:"Yasa 15 ana. Yasa 47 — burada 'ezmek' onu kişisel olarak yok etmek değil; bir sonraki tur için elinde koz bırakmamak.",
+yuzey:"Yüzeyde 'kazandıktan sonra centilmence geri durmak'. Altta iç rekabette yarı kazanılan tur, rakibe toparlanma ve karşı hamle için zemin bırakır.",
+kritik:`Çekişmeyi kazandıktan sonra "iş bitti" deyip Murat'ı izlemeyi bıraktığın an. Kazanmak turun sonu değil, sadece o turun sonuydu.`,
+simdi:`'Ezmek' derken kişisel husumet değil, koz bırakmamak: kendi işini kusursuz tut ki Murat'ın bekleyeceği bir gedik olmasın. İttifaklarını sen de tazele. Bir turu kazandığında rahatlamak yerine bir sonraki turun hazırlığına geç.`},
+{n:16,t:"Yokluğunu saygıyı artırmak için kullan",c:["algi"],o:"Rakibin her an ulaşılabilirken, senin az ama yoğun varlığın değer kazanır.",
+senaryo:`Furkan her toplantıda, her kanalda, her sohbette var — sürekli görünür, sürekli erişilebilir. Sen de onunla yarışmak için aynısını yapmaya başladın: her toplantıya gir, her mesaja anında dön, her tartışmaya katıl. Sonuç: ikiniz de 'ortam gürültüsü' oldunuz. Selin ise seçici — sadece önemli toplantıda, sadece söyleyecek şeyi olduğunda. Selin bir toplantıya girdiğinde herkes dikleşiyor; sen girdiğinde 'a, Deniz da gelmiş' deniyor. Aşırı görünürlük, görünmezliğin başka bir biçimi.`,
+yasalar:"Yasa 16 ana. Yasa 6 — dikkat çekmekle gürültü yapmak farklı şeyler; Furkan'la görünürlük yarışına girmek ikinizi de değersizleştirdi.",
+yuzey:"Yüzeyde 'rakip kadar görünür olmak'. Altta her yerde olmak hiçbir yerde olmamaktır; sürekli varlık, varlığını sıradanlaştırır.",
+kritik:"Furkan'la görünürlük yarışına girmeye karar verdiğin an. Onun oyununu oynayarak değil, kendi ritmini kurarak ayrışmalıydın.",
+simdi:`Görünürlüğü bırak, seçiciliğe geç. Sadece katkı verebileceğin toplantıya gir, sadece söyleyecek şeyin olduğunda konuş. Birkaç hafta içinde senin varlığın bir 'olay' olur, Furkan'ınki 'fon gürültüsü' kalır.`},
+{n:17,t:"Öngörülemezlik havası yarat",c:["algi","atak"],o:"Rakip senin bir sonraki hamleni tahmin edebiliyorsa, savunmasını ona göre kurar.",
+senaryo:`Murat seni iyi okumuş. Her terfi döneminde aynı şeyi yaptığını biliyor: sezon başında Alihan'a bir 'büyük proje' önerirsin, ortasında bir ara rapor sunarsın, sonunda kapanış yaparsın. Murat buna göre konumlanıyor — sen büyük projeni açıklamadan, o benzer bir alanı çoktan tutmuş oluyor. Senin takvimin onun elinde. Bu sezon farklı yaptın: hiç 'büyük proje' duyurusu yapmadın, küçük ve sessiz işlerle ilerledin, sonra beklenmedik bir anda tamamlanmış bir sonuç sundun. Murat hazırlıksız yakalandı.`,
+yasalar:"Yasa 17 ana. Yasa 3 — öngörülemezlik, niyet gizlemenin zaman içine yayılmış hali; sadece ne yaptığını değil, ne zaman yaptığını da gizledin.",
+yuzey:"Yüzeyde 'istikrarlı, planlı çalışma temposu'. Altta rekabette tahmin edilebilir ritim, rakibe seni önceden engelleme imkânı verir.",
+kritik:"Yok — bu sezonki hamlen doğruydu. Hata önceki sezonların hep aynı kalıpta olmasıydı; Murat o kalıbı ezberlemişti.",
+simdi:`Ritmini bilinçli olarak değiştir — bazen erken, bazen geç, bazen sessiz, bazen gürültülü. Murat'ın seni 'okuyabilmesini' engelle. Tahmin edilemezlik, rakibin savunma planını işe yaramaz kılar.`},
+{n:18,t:"Kale kurma — izolasyon tehlikelidir",c:["savunma"],o:"Rakiple kapışırken yalnızsan, o ittifaklarıyla gelir, sen tek başına.",
+senaryo:`Sen işine odaklısın, kimseyle özel uğraşmıyorsun — "işimi iyi yaparım, gerisi gelir" diyorsun. Murat ise sürekli ağ kuruyor: finansla, İK'yla, diğer departmanlarla, hatta Alihan'ın asistanı Pınar'la iyi geçiniyor. Terfi değerlendirmesi geldiğinde Alihan birkaç kişiye danıştı — Murat'ı herkes tanıyordu, herkesin onunla bir 'iyi anısı' vardı. Senin için en sık çıkan cümle: "İşi iyidir ama pek tanımıyorum." Murat seni işle değil, ağla yendi.`,
+yasalar:"Yasa 18 ana. Yasa 19 — kimseyi tanımadın, kimse seni tanımıyor; rakip ise herkesi tanıyor.",
+yuzey:"Yüzeyde 'politika yapmadan, sadece işe odaklanan dürüst çalışan'. Altta iç rekabette izolasyon savunmasızlıktır; karar anında senin için konuşacak kimse yoksa, rakibin ağı seni gömer.",
+kritik:`"İşimi iyi yaparım, gerisi gelir" varsayımın. İç rekabette 'gerisi' kendiliğinden gelmez; rakibin onu inşa ederken sen beklersen, geç kalırsın.`,
+simdi:`Ağ kurmaya başla — sahte değil, gerçek. Diğer departmanlardan birkaç kişiye düzenli küçük destekler ver, onların işini kolaylaştır. Murat'la kapışma anı geldiğinde senin için de konuşan birileri olsun. İş yetmez; iş + ağ kazanır.`},
+{n:19,t:"Kiminle uğraştığını bil",c:["savunma","iletisim"],o:"Her rakip aynı değil; bazısı açık savaşır, bazısı gülümseyerek.",
+senaryo:`İki rakibin var. Kerem açık çatışmacı — itirazını yüzüne söyler, toplantıda karşına geçer, ne düşündüğü bellidir. Murat ise gülümseyen tip — sana karşı hep nazik, hep destekler görünür, ama arkadan çalışır. Sen ikisine de aynı şekilde davrandın: ikisine de açık, ikisine de güvenir. Kerem'e karşı açık olman sorun değildi — o da açıktı. Ama Murat'a karşı açık olman felaketti; ona verdiğin her bilgi, gülümsemesinin arkasında silaha dönüştü. Aynı strateji, farklı rakip — biri işe yaradı, biri seni vurdu.`,
+yasalar:"Yasa 19 ana. Yasa 14 — Murat'ın 'dost gibi davranıp casus gibi çalışan' tipte olduğunu okuyamadın.",
+yuzey:"Yüzeyde 'herkese eşit ve dürüst davranmak'. Altta rekabette herkese aynı stratejiyle yaklaşmak, en tehlikelisine kapını sonuna kadar açmak demek.",
+kritik:"Murat'ın nazikliğini Kerem'in açıklığıyla aynı kategoriye koyduğun an. Açık rakip okunabilir, gülümseyen rakip okunması gereken.",
+simdi:`Her rakibini ayrı oku. Kerem'le açık ol — o da öyle. Murat'a karşı kibar ama kapalı ol — bilgini ver me, niyetini gizle. Rakibin tipini teşhis et, stratejini ona göre kişiselleştir.`},
+{n:20,t:"Kimseye bağlanma",c:["savunma"],o:"İki güçlü figür çatışırken birinin 'adamı' olmak, onunla batmaktır.",
+senaryo:`Şirkette CFO Aslı ile COO Mert arasında bir güç mücadelesi var. Rakibin Murat erkenden Mert'in safına geçti — onun ekibinde göründü, onu destekledi, 'Mert'in adamı' oldu. Sen ne yaptın bilmiyordun, sonunda sen de dengelemek için Aslı'nın safına yaslandın. Bir yıl sonra Mert kazandı. Murat yükseldi. Sen 'Aslı ekibi' diye işaretlendin, terfi havuzunun dışına itildin. İronik olan: Selin hiçbir safta görünmedi, ikisiyle de çalıştı — Mert kazandığında o da ayaktaydı.`,
+yasalar:"Yasa 20 ana. Yasa 10 — kaybeden tarafa bağlanmak, onun şanssızlığına ortak olmanın ta kendisi.",
+yuzey:"Yüzeyde 'rakip bir safa geçince dengelemek için karşı safa geçmek'. Altta iç rekabette saf tutmak kumar; doğru tahmin edersen yükselirsin, yanlışsa rakibin değil, senin kariyerin biter.",
+kritik:"Murat saf seçti diye sen de 'dengeleme' refleksiyle karşı safa geçtiğin an. Onun hatası seni kendi hatana itmemeliydi.",
+simdi:`Saflardan görünür biçimde çık. İki tarafa da yararlı, hiçbirinin 'adamı' değil. Murat bir safa bağlıyken sen esnek kal — kim kazanırsa kazansın ayakta olmak, herhangi bir tarafın kazanmasından değerlidir.`},
+{n:21,t:"Salakları yakalamak için salak rolü yap",c:["atak"],o:"Rakip seni hafife alırsa, savunmasını düşürür.",
+senaryo:`Murat seni hep biraz hafife aldı — "Arda iyi çocuk ama stratejik değil, operasyonel kafa" derdi. Sen bunu düzeltmeye çalışmadın, hatta besledin: toplantılarda sade durdun, büyük iddialardan kaçındın, Murat'ın seni 'zararsız' görmesine izin verdin. Murat rahatladı, sana karşı savunmasını düşürdü, planlarını yanında konuşur oldu. Sen o süre boyunca sessizce Alihan'a doğrudan, somut sonuçlar taşıdın. Terfi açıklandığında Murat şok oldu — 'operasyonel çocuk' onu geçmişti. Onu yenen şey, seni hafife almasıydı.`,
+yasalar:"Yasa 21 ana. Yasa 3 — kendini olduğundan zararsız göstermek, niyet gizlemenin bir biçimi.",
+yuzey:"Yüzeyde 'iddiasız, mütevazı bir çalışan'. Altta hesaplı bir hafife alınma; rakibin seni küçümsemesi, onun en büyük zayıflığına dönüşüyor.",
+kritik:"Yok — bu hamle doğruydu. Tek risk: Alihan'ın da seni hafife alması; o yüzden Murat'a zararsız görünürken Alihan'a sonuç taşımaya devam etmen kritikti, ki ettin.",
+simdi:`Bu kartı dengeli oyna: rakibe karşı sade ve zararsız, karara karşı (Alihan) net ve sonuç odaklı. Rakibin seni küçümsemesini bir zayıflık değil, bir kalkan olarak kullan — ama yöneticinin gözünde asla küçük kalma.`},
+{n:22,t:"Teslim olma taktiği: zayıflığı güce çevir",c:["savunma"],o:"Kaybedeceğin bir çekişmede direnmek yerine geri çekilmek, savaşı değil pozisyonu korur.",
+senaryo:`Bir proje liderliği için Murat'la kapıştınız. Murat'ın o an Alihan'ın gözünde belirgin bir üstünlüğü vardı — bu turu kaybedeceğin belliydi. İlk içgüdün sonuna kadar direnmekti. Ama düşündün ve farklı yaptın: zarif biçimde çekildin, "bu projede Murat daha hazır, ben bir sonrakine odaklanırım" dedin. Murat projeyi aldı — ve proje zorlu çıktı, aksamalar oldu. Sen 'olgun, ekip çıkarını düşünen' kişi olarak hatırlandın, üstelik enkaza bulaşmadın. Bir sonraki, daha büyük liderlik sana geldi.`,
+yasalar:"Yasa 22 ana. Yasa 35 — kaybedilecek turu zamanında bırakmak, doğru zamanlamanın bir biçimi.",
+yuzey:"Yüzeyde 'rakibe pas vermek, pısırıklık'. Altta kaybedeceğin bir kapışmada onurlu çekilme, hem itibarını korur hem rakibini riskli bir işin altına sokar.",
+kritik:"Yok — çekilme kararı doğruydu. Hata olsaydı: kaybedeceğin belli olan turda inatla direnip hem turu hem itibarı kaybetmek olurdu.",
+simdi:`Her çekişmeye girme — kazanacaklarını seç. Kaybedeceğin belli olan turda zarifçe çekil, rakibi riskin altına bırak, kendini bir sonraki ve daha büyük tur için sakla. Geri çekilmek, yenilmek değildir.`},
+{n:23,t:"Güçlerini topla",c:["savunma","atak"],o:"Rakip tek bir alanda derinleşmişken sen dört alana yayılırsan, her alanda ona yenilirsin.",
+senaryo:`Sen ve Selin aynı terfi havuzundasınız. Sen kendini her şeye yaymaya çalıştın — biraz operasyon, biraz raporlama, biraz müşteri ilişkisi, biraz ekip yönetimi, ki 'çok yönlü' görün. Selin tek bir şeye gömüldü: müşteri portalı projesi, başka hiçbir şey. Yıl sonunda Alihan'ın aklında Selin'in net, büyük, tek bir başarısı vardı; senin ise dağınık, ortalama beş katkın. 'Çok yönlü' olmak, 'hiçbir şeyde rakibi geçememek' demekti.`,
+yasalar:"Yasa 23 ana. Yasa 4 — dağılmak, eylemde 'çok konuşmanın' karşılığı; her yere biraz dokunmak, hiçbir yerde iz bırakmamak.",
+yuzey:"Yüzeyde 'çok yönlülük, esneklik'. Altta rekabette güç toplanmadığında etki sıfırlanır; rakip bir noktaya tüm ağırlığını koyarken sen yayılırsan, çarpışma noktalarının hepsinde sen hafif kalırsın.",
+kritik:"Yılın başında 'her alana gireyim, çok yönlü görüneyim' diye karar verdiğin an. O an Selin tek alanı seçip kazanmaya başlamıştı.",
+simdi:`Bir alan seç — rakibin en zayıf, senin en güçlü olduğun yer. Tüm enerjini oraya topla. Yıl sonunda Alihan'ın aklında dağınık beş katkı değil, net tek bir zafer olsun. Rekabet, kuvvetin yoğunlaştığı yerde kazanılır.`},
+{n:24,t:"Mükemmel saraylı rolünü oyna",c:["algi","iletisim"],o:"İki rakip eşit yetenekteyse, yöneticinin diliyle konuşan kazanır.",
+senaryo:`Sen ve Murat teknik olarak başa baş. Ama Murat bir şeyi senden iyi yapıyor: Alihan'ın 'dilini' konuşuyor. Alihan'ın sevdiği raporlama formatını kullanıyor, onun toplantı ritmine uyuyor, onun önemsediği metrikleri öne çıkarıyor, onun değer verdiği şeyleri tekrarlıyor. Sen ise kendi tarzında çalışıyorsun — iyi, ama Alihan'ın diline çevrilmemiş. Alihan ikinizi de takdir ediyor ama Murat'ı 'daha kolay anlıyor'. Terfi, anlaşılması kolay olana gitti.`,
+yasalar:"Yasa 24 ana. Yasa 44 — Murat Alihan'ı yansıtıyor; yöneticinin tarzını aynalamak, onun gözünde 'uyumlu' görünmenin yolu.",
+yuzey:"Yüzeyde 'kendi özgün çalışma tarzını korumak'. Altta iç rekabette yöneticinin koduyla konuşmamak, eşit yetenekte bile seni ikinci sıraya düşürür; karar verici, anladığı kişiyi seçer.",
+kritik:"Kendi tarzında ısrar edip Alihan'ın koduna çevirmeyi 'yalakalık' sayarak reddettiğin an. Bu yalakalık değil, iletişim.",
+simdi:`Alihan'ı incele: hangi formatı seviyor, hangi metriği önemsiyor, hangi ritimle çalışıyor. İşinin kalitesini bozmadan, sunumunu onun diline çevir. Murat'la eşitsen, farkı 'anlaşılır olmak' yaratır.`}
+];
+const RAKIP_LAWS_2=[
+{n:25,t:"Kendini yeniden yarat",c:["algi"],o:"Rakip seni bir kategoriye hapsettiyse, o kategoriden çıkarak yarışı değiştir.",
+senaryo:`Murat yıllardır seni aynı kutuya koyuyor: "Tolga operasyoncu, sahada iyidir." Bu etiket terfi yarışında seni 'stratejik pozisyon' dışında tutuyordu. Sen etiketi kabul etmek yerine, sessizce yeniden inşa ettin: altı ay boyunca her ay bir pazar analizi yazdın, stratejik bir dil geliştirdin, toplantılarda 'sahacı' değil 'planlayan' biri gibi konuştun. Murat hâlâ "operasyoncu" diyordu ama artık kimse onaylamıyordu. Etiket değişince, yarışın kuralları da değişti.`,
+yasalar:"Yasa 25 ana. Yasa 6 — yeni kimlik ancak görünür kılınırsa işe yarar; sadece içten değişmek yetmez.",
+yuzey:"Yüzeyde 'rakibin yakıştırdığı role razı olmak'. Altta rakip seni dar bir kategoride tutarak rekabet alanını kendi lehine daraltıyor; o kategoriden çıkmak, oyun alanını yeniden çizmektir.",
+kritik:`Murat'ın "operasyoncu" etiketini yıllarca sessizce kabullenmen. Etiket erken kırılmazsa, terfi anında 'zaten o öyle biri' diye karşına çıkar.`,
+simdi:`Rakibin sana yapıştırdığı etiketi tespit et, sonra onu görünür biçimde yalanla. Aylarca, tutarlı olarak yeni kimliğini sergile — yazıyla, sunumla, dille. Rakip eski etiketi tekrarladığında, kimse ona katılmasın.`},
+{n:26,t:"Ellerini temiz tut",c:["atak"],o:"Rakibine karşı kirli işi sen yapma; sonucu al, izi bırakma.",
+senaryo:`Murat'ın bir projesinde ciddi bir zafiyet vardı ve sen bunu biliyordun. İçgüdün toplantıda kendin patlatmaktı — ama bu seni 'rakibini batıran kişi' yapardı. Bunun yerine, denetimden sorumlu Pınar'a masum bir soru sordun: "Pınar Hanım, Murat'ın projesindeki tedarikçi onayları tamam mı, ben kendi tarafımda kontrol ederken merak ettim." Pınar baktı, eksiği kendi buldu, kendi raporladı. Murat'ın projesi gecikti. Senin elin hiç görünmedi — sen sadece 'meraklı meslektaş'tın.`,
+yasalar:"Yasa 26 ana. Yasa 14 — bilgiyi doğrudan kullanmak yerine, onu doğru kişinin eline 'masum soru' kılığında bırakmak.",
+yuzey:"Yüzeyde 'iyi niyetli bir koordinasyon sorusu'. Altta rakibin zafiyetini, kendi elin değmeden, sürecin doğal işleyişine havale etmek.",
+kritik:"Yok — bu hamlenin inceliği tam da elini göstermemekte. Hata olsaydı: zafiyeti toplantıda kendin patlatıp 'rakip avcısı' damgası yemek olurdu.",
+simdi:`Rakibinin açığını gördüğünde, onu kendi elinle kullanma. Doğru kişiye, doğru soruyu, doğru zamanda sor — sonuç kendiliğinden gelsin. İç rekabette 'rakibini batıran' damgası, kazandığın turdan pahalıya patlar.`},
+{n:27,t:"İnsanların inanma ihtiyacını kullan",c:["algi","iletisim"],o:"Rakip somut sonuç sunarken sen bir 'dava' sunarsan, kalpleri sen alırsın.",
+senaryo:`Selin'le ekip liderliği yarışındasınız. Selin Alihan'a hep sayı taşıyor: "şu metrik %12 arttı, bu süre %8 kısaldı." İyi de, kuru. Sen farklı bir şey yaptın: ekibe bir 'anlam' sundun — "biz sadece rapor üreten bir ekip değiliz, şirketin dış dünyaya açılan yüzüyüz" dedin, küçük bir ekip ritüeli başlattın, bir kimlik kurdun. Ekip sana duygusal olarak bağlandı. Alihan ekip moralinin yükseldiğini gördü. Selin'in sayıları doğruydu ama senin ekibin 'seninle' hissediyordu.`,
+yasalar:"Yasa 27 ana. Yasa 32 — sayı yerine anlatı sunmak, insanların fantezisine oynamanın bir biçimi.",
+yuzey:"Yüzeyde 'rakip daha veri odaklı, daha profesyonel'. Altta insanlar — ekip de, yönetici de — kuru veriye değil, ait olabilecekleri bir anlatıya bağlanır; lider seçilirken 'bağ' sayıyı geçer.",
+kritik:"Yok — bu doğru hamle. Risk: anlatının arkasını sonuçla doldurmamak; sadece hikâye, sonuçsuz kalırsa balon olur.",
+simdi:`Sayıyı bırakma ama onu bir anlatının içine yerleştir. Ekibine ait olabilecekleri bir kimlik, bir 'neden' sun. Selin veri sunarken sen hem veri hem anlam sun — kalpleri kazanan, ikisini birleştirendir.`},
+{n:28,t:"Eyleme cesaretle gir",c:["atak"],o:"Rakip tereddüt ederken cesur ve net olan, kararı kapar.",
+senaryo:`Alihan ekibe riskli ama büyük bir fırsat sundu — yeni bir pazara açılma projesi. Belirsizlik yüksekti. Sen ve Murat ikiniz de adaydınız liderliğe. Murat temkinli konuştu: "Riskli patronum, biraz daha analiz etsek, acele etmesek." Sen riski biliyordun ama net durdun: "Üç ayda bir pilotla test ederim, batarsa kontrollü batar, ama denemezsek rakip alır. Ben varım." Alihan cesur olanı seçti. Murat'ın temkini 'olgunluk' değil 'çekingenlik' olarak okundu.`,
+yasalar:"Yasa 28 ana. Yasa 4 — Murat'ın temkinli uzun cümleleri tereddüt yaydı; senin kısa ve net duruşun güven yaydı.",
+yuzey:"Yüzeyde 'Murat sorumlu davranıyor, riski tartıyor'. Altta belirsizlik anında yöneticiler cesareti yetkinlik sanır; tereddüt eden rakip, kendini kendi eliyle eler.",
+kritik:"Yok — senin net duruşun doğruydu. Murat'ın hatası: riski 'yapmama gerekçesi' gibi sunmak, oysa risk yönetilecek bir şey olarak sunulmalıydı.",
+simdi:`Belirsiz fırsatlarda rakibin tereddüdünü fırsata çevir. Riski inkâr etme ama onu 'yöneteceğim bir şey' olarak çerçevele, net dur. Cesaret + plan = liderlik; rakip tereddüt ederken sen seçilirsin.`},
+{n:29,t:"Sonuna kadar planla",c:["savunma"],o:"Rakip senin parlak başlangıcının çöküşünü bekler; onu sonuçla şaşırt.",
+senaryo:`Bir projeyi Murat'tan kapmıştın çünkü başlangıç sunumun çok parlaktı. Murat itiraz etmedi — sadece bekledi. Çünkü Murat senin kalıbını biliyordu: harika başlar, ortada dağılırsın. Sen de bu sefer farkındaydın. Projeyi almadan önce bitişi planladın: ara kontrol noktaları, devir teslim takvimi, kapanış kriterleri — hepsi baştan yazılıydı. Üçüncü ayda Murat senin 'her zamanki dağılmanı' beklerken, proje planlı biçimde ilerliyordu. Murat'ın stratejisi senin eski zayıflığına dayanıyordu; sen o zayıflığı kapattığında, onun bekleyişi boşa düştü.`,
+yasalar:"Yasa 29 ana. Yasa 17 — eski kalıbını kırmak aynı zamanda öngörülemez olmak; Murat seni eski halinle modellediği için yanıldı.",
+yuzey:"Yüzeyde 'rakip centilmence geri çekildi, itiraz etmedi'. Altta rakip senin geçmiş zayıflığına güveniyordu; itiraz etmemesi, çöküşünü beklemesiydi.",
+kritik:"Yok — bu sefer doğru yaptın. Geçmiş hatan: önceki projelerde bitişi planlamayıp Murat'a 'bekle, dağılır' güveni vermendi.",
+simdi:`Bir işi rakibinden kaparken, onun seni nereden vuracağını düşün — genelde geçmiş bir zayıflığından. O zayıflığı baştan kapat, bitişi başından planla. Rakibin stratejisi senin eski halineyse, yeni halinle onu işsiz bırak.`},
+{n:30,t:"Başarılarının zahmetsiz görünmesini sağla",c:["algi"],o:"Rakip ne kadar zorlandığını anlatırken, sen kolay yapmış gibi görün.",
+senaryo:`Sen ve Furkan benzer işler çıkarıyorsunuz. Furkan her işinin ne kadar zor olduğunu anlatıyor: "Gece yarısına kadar uğraştım, üç kez baştan yaptım, çok yıprandım." Sempati bekliyor. Sen tersini yaptın — aynı zorlukta işleri yaptın ama "hallettik, akıcı gitti" diye sundun. Altı ay sonra Alihan'ın kafasında Furkan 'çok çabalayan ama zorlanan', sen 'rahatça üstesinden gelen' biriydin. Terfi 'zorlanmadan yapabilen'e gitti — çünkü bir üst pozisyon daha fazla zorluk demekti ve Alihan kimin kaldıracağına bakıyordu.`,
+yasalar:"Yasa 30 ana. Yasa 46 — Furkan'ın sürekli 'zorlandım' demesi, mükemmeliyetsizliğini değil, kapasitesizliğini sergiledi.",
+yuzey:"Yüzeyde 'emeğini dürüstçe paylaşmak'. Altta rekabette 'ne kadar zorlandığını' anlatmak, rakibe karşı kapasiteni küçük gösterir; yönetici terfi için 'daha fazlasını kaldırabilecek' olanı arar.",
+kritik:"Yok — senin sunumun doğruydu. Furkan'ın hatası: zorluğu paylaşmayı dürüstlük sandı, oysa rekabette o bir zayıflık beyanıydı.",
+simdi:`Çabanı değil sonucu sun. 'Zorlandım' deme — 'çözdük' de. Furkan ne kadar yıprandığını anlatırken sen ne kadar rahat ürettiğini göster. Bir üst pozisyon için yarışıyorsan, 'fazlasını kaldırabilir' görünmek şart.`},
+{n:31,t:"Seçenekleri kontrol et",c:["atak"],o:"Rakiple kapışmayı, kazanacağın zemine taşı.",
+senaryo:`Murat'la bir terfi yarışındasınız ve karşılaştırma 'sayısal raporlama' üzerinden yapılacak gibi görünüyordu — Murat'ın güçlü, senin zayıf olduğun alan. Sen bu zemini kabul etmedin. Alihan'a gittin ve değerlendirmenin kapsamını sessizce genişlettin: "Patronum, bu pozisyon sadece raporlama değil, saha-merkez koordinasyonu da gerektiriyor, belki onu da kritere koymalıyız." Alihan mantıklı buldu. Artık yarış senin güçlü olduğun zemini de içeriyordu. Murat hâlâ kazanabilirdi — ama artık kendi sahasında değil, senin de sahanda oynuyordu.`,
+yasalar:"Yasa 31 ana. Yasa 9 — zemini tartışmadan, sürecin tasarımını değiştirerek kazanmak.",
+yuzey:"Yüzeyde 'değerlendirme kriterine katkı sunmak'. Altta rekabette üzerinde yarışılan zemini belirleyen, yarışın yarısını çoktan kazanmıştır; kriteri kontrol eden sonucu yönlendirir.",
+kritik:"Yok — bu hamle doğruydu. Hata olsaydı: 'raporlama' zeminini sorgusuz kabul edip Murat'ın güçlü olduğu sahada savaşmak olurdu.",
+simdi:`Rakiple hangi zeminde karşılaştırılacağını sorgula. Zemin onun güçlü alanıysa, kriteri meşru biçimde genişlet — senin de güçlü olduğun boyutları sürece dahil et. Yarışın kurallarını yazan, yarışı yönlendirir.`},
+{n:32,t:"İnsanların fantezilerine oyna",c:["iletisim","algi"],o:"Rakip mevcut durumu savunurken, sen daha iyi bir geleceğin resmini çiz.",
+senaryo:`Ekip liderliği yarışında Murat 'istikrar' satıyordu: "Sistem çalışıyor, ekip oturmuş, ben devam ettiririm, riske girmeyelim." Güvenli ama heyecansız. Sen bir gelecek resmi çizdin: "Bu ekip şu an iyi, ama iki yılda sektörün referans ekibi olabilir — şu üç adımla." Somut değildi belki ama bir özlem uyandırdı. Alihan'ın da, ekibin de gözü parladı. Murat 'bugünü koru' derken sen 'yarını kur' dedin. İnsanlar korumak için değil, bir şey olmak için heyecanlanır.`,
+yasalar:"Yasa 32 ana. Yasa 27 — gelecek vaadi, insanların inanma ve ait olma ihtiyacını besler.",
+yuzey:"Yüzeyde 'Murat gerçekçi, sen hayalci'. Altta rekabette mevcudu savunan durağan görünür, daha iyi bir geleceği resmeden ilham verir; seçim yapan, ilham vereni seçer.",
+kritik:"Yok — senin çerçeven doğruydu. Risk: gelecek vaadini hiç somuta bağlamamak; tamamen hayal kalırsa Murat'ın 'gerçekçilik' eleştirisi tutar.",
+simdi:`Rakip 'istikrarı' savunuyorsa, sen 'dönüşümü' sun — ama vaadi en az birkaç somut adıma bağla. İnsanlara bugünü değil, olabilecekleri yarını göster. Korkuyu değil özlemi sat.`},
+{n:33,t:"Her insanın zayıf noktasını keşfet",c:["atak"],o:"Rakibinin en hassas olduğu nokta, onun en kontrol edilebilir olduğu noktadır.",
+senaryo:`Murat'ın bir zayıflığını fark ettin: 'haklı çıkmak' onun için bir takıntı, en küçük itirazda bile savunmaya geçiyor, kontrolünü kaybediyor. Bunu açık saldırı için kullanmadın — daha incesini yaptın. Önemli bir toplantıdan hemen önce, Murat'ı sakince ufak bir noktada sorguladın: "Murat, şu rakam emin misin?" Murat o soruyla meşgul oldu, savunmaya geçti, toplantıya dağılmış girdi. Sen sakindin. Onun zayıf noktası — itiraza tahammülsüzlük — onu sen hiç sesini yükseltmeden istikrarsızlaştırdı.`,
+yasalar:"Yasa 33 ana. Yasa 39 — zayıf noktayı bulup oradan küçük bir baskı uygulamak, suyu bulandırıp rakibi dengesizleştirmenin kişiselleştirilmiş hali.",
+yuzey:"Yüzeyde 'meşru bir doğrulama sorusu'. Altta rakibin psikolojik zayıf noktasını, kritik bir an öncesinde, ölçülü biçimde tetiklemek.",
+kritik:"Yok — incelik tam da ölçülü olmakta. Hata olsaydı: zayıf noktayı kaba ve görünür biçimde kullanıp 'manipülatör' damgası yemek olurdu.",
+simdi:`Rakibinin psikolojik zayıf noktasını teşhis et — onaylanma mı, haklı çıkma mı, kontrol mü? Ama bunu nadiren ve ölçülü kullan. Aynı zamanda: kendi zayıf noktanı gizle, rakibin onu bulup aynısını sana yapmasına izin verme.`},
+{n:34,t:"Kendi tarzında asil ol",c:["algi"],o:"Rakibinle aynı seviyede çekişirsen onun seviyesine inersin; üstünde dur.",
+senaryo:`Murat seninle çekişirken küçük oyunlara başvuruyor — iğneleyici imalar, toplantıda alttan alta küçümsemeler, kulis dedikoduları. Senin içgüdün aynısıyla karşılık vermekti. Ama farklı yaptın: hiç o seviyeye inmedin, sakin ve kurumsal kaldın, Murat'ın iğnelerine sadece içerikle cevap verdin. Zamanla bir kontrast oluştu: Murat 'didişen', sen 'ağırbaşlı'. Ekip ve Alihan bu kontrastı gördü. Murat seni küçük oyunlara çekmeye çalıştıkça, kendi küçüklüğünü büyüttü.`,
+yasalar:"Yasa 34 ana. Yasa 44 — Murat'ın oyununu aynalamayı reddetmek; tam da yansıtmayarak üstünlük kurmak.",
+yuzey:"Yüzeyde 'rakibin saldırısına karşılık vermemek, pısırıklık'. Altta rakip seni kendi seviyesine çekmeye çalışıyor çünkü orada güçlü; sen seviyeni koruyarak onu yalnız ve küçük bırakırsın.",
+kritik:"Yok — seviye korumak doğruydu. Hata olsaydı: Murat'ın iğnelerine iğneyle karşılık verip ikinizi de 'didişen ikili' kategorisine sokmak olurdu.",
+simdi:`Rakip seni küçük oyunlara çekiyorsa, oynama — seviyeni koru. İğnelere içerikle, dedikoduya sonuçla cevap ver. Kontrast senin lehine işler: o küçüldükçe sen büyürsün, hem de hiçbir şey yapmadan.`},
+{n:35,t:"Zamanlama sanatında ustalaş",c:["atak","savunma"],o:"Rakibine karşı hamleni doğru anı bekleyerek yap; erken hamle ham, geç hamle boşa.",
+senaryo:`Murat'ın bir projesinde aksaklık olduğunu öğrendin. İlk içgüdün hemen Alihan'a gitmekti. Ama gitmedin — çünkü o an Alihan'ın gözünde Murat'ın kredisi yüksekti, 'kıskanç rakip' gibi görünürdün. Bekledin. Üç hafta sonra Murat'ın aksaklığı kendiliğinden yüzeye çıktı, Alihan zaten rahatsızdı. Tam o anda sen sahneye sessizce kendi başarılı projenin sonuçlarıyla çıktın. Aynı bilgi, aynı sen — ama üç hafta farkla, biri 'çekememezlik', diğeri 'doğal üstünlük' olarak okundu.`,
+yasalar:"Yasa 35 ana. Yasa 36 — rakibin düşüşüne müdahil olmamak; ona ilgi göstermeyip kendi yükselişine odaklanmak.",
+yuzey:"Yüzeyde 'rakibin hatasını fark eder etmez harekete geçmek'. Altta aynı hamle yanlış zamanda kıskançlık, doğru zamanda üstünlük olarak okunur; zamanlama, hamlenin anlamını belirler.",
+kritik:"Yok — beklemen doğruydu. Hata olsaydı: Murat'ın kredisi yüksekken erken davranıp 'rakibini kötüleyen' damgası yemek olurdu.",
+simdi:`Rakibinin açığını gördüğünde, hemen davranma — anı tart. Onun kredisi yüksekken hamle yaparsan sen kötü görünürsün. Bekle, koşullar olgunlaşsın, sonra kendi gücünle çık — onu kötülemeden, sadece kendin parlayarak.`},
+{n:36,t:"Sahip olamadığını küçümse",c:["algi"],o:"Rakibinin kazandığı turu büyütme; ilgilenmediğin bir şey küçük kalır.",
+senaryo:`Bir proje liderliğini Murat aldı, sen alamadın. İçin yandı ve bunu belli ettin — herkese "aslında ben daha uygundum", "neden Murat anlamıyorum" diye konuştun, her toplantıda o projeye gönderme yaptın. Bu Murat'ın zaferini büyüttü, seni 'kaybeden' olarak sabitledi. Selin de bir kez terfi kaçırmıştı ama o hiç oralı olmadı — "olur böyle şeyler" deyip kendi işine döndü. Altı ay sonra Selin'in soğukkanlılığı 'olgunluk' diye konuşuluyordu; senin yakınman 'çekememezlik' diye.`,
+yasalar:"Yasa 36 ana. Yasa 5 — sürekli yakınmak itibarı aşındırır; her şikâyet seni biraz daha küçültür.",
+yuzey:"Yüzeyde 'haksızlığa uğradığını dile getirmek'. Altta rekabette kaybettiğin tura gösterdiğin ilgi, o turu ve rakibini büyütür; seni ise o kaybın etrafına sabitler.",
+kritik:"Sonucu öğrendikten sonra konuyu açık tutmaya, tekrar tekrar değinmeye devam etmen. Belki bir kez serzeniş normaldi; tekrarı seni tanımladı.",
+simdi:`Kaybettiğin turu kapat. Murat'ı tebrik et, konuyu bir daha açma, enerjini bir sonrakine ver. İlgilenmediğin şey küçülür; rakibinin zaferini küçültmenin yolu, ona hiç bakmamaktır.`},
+{n:37,t:"Etkileyici gösteriler yarat",c:["algi","iletisim"],o:"Rakip veriyi sıralarken, sen unutulmayan bir an yarat.",
+senaryo:`Yıl sonu değerlendirmesinde sen ve Selin ikiniz de yıllık çalışmanızı sunacaktınız. Selin işlerini tek tek, düzgün ama düz sıraladı — liste gibi. Sen tek bir şeye odaklandın: yılın en zorlu krizini nasıl çözdüğünü, bir 'önce-sonra' anlatısıyla, tek güçlü görselle sundun. Diğer işlerini bir cümleyle geçtin. Toplantıdan çıkarken herkesin aklında senin o tek anın vardı; Selin'in listesi ise toplamda daha doluydu ama hiçbir parçası akılda kalmadı.`,
+yasalar:"Yasa 37 ana. Yasa 6 — gösteri, dikkat çekmenin sahnelenmiş biçimi; rakip görünür olmaya çalışmıyorsa, sahneyi sen alırsın.",
+yuzey:"Yüzeyde 'tüm yıllık çıktıyı eksiksiz raporlamak' (Selin). Altta rekabette akılda kalan, listenin uzunluğu değil, tek bir güçlü andır; hatırlanan kazanır.",
+kritik:"Yok — senin sunumun doğruydu. Selin'in hatası: bütünü göstermeye çalışıp hiçbir şeyi vurgulayamamak; eksiksizlik, akılda kalıcılığı öldürdü.",
+simdi:`Rakip her şeyini sıralarken, sen bir şeyini sahnele. En güçlü anını seç, onu bir anlatıya ve tek bir görsele çevir, gerisini kısa geç. Değerlendirme bittiğinde akıllarda kalan o an, senin olsun.`},
+{n:38,t:"Düşündüğün gibi düşün, başkaları gibi davran",c:["savunma"],o:"Rakibinle yarışırken 'ortama aykırı' görünmek, ona bedava koz verir.",
+senaryo:`Şirketin yerleşik bir çalışma kültürü var ve sen bazı yönlerini saçma buluyorsun — uzun toplantılar, gereksiz raporlar. Bunu her fırsatta dile getiriyorsun, 'sistem eleştirmeni' oldun. Murat da aynı şeyleri düşünüyor ama tek kelime etmiyor — kültüre uyumlu görünüyor. Terfi değerlendirmesinde Alihan'ın aklında sen 'uyumsuz, sürekli itiraz eden', Murat 'uyumlu, sorun çıkarmayan' biriydin. İkinizin de içi aynıydı; ama dışı farklıydı ve değerlendirilen dıştı.`,
+yasalar:"Yasa 38 ana. Yasa 45 — değişimi istemek başka, onu açık aykırılıkla göstermek başka; Murat değişimi içinde tutup dışta uyumlu kaldı.",
+yuzey:"Yüzeyde 'dürüstçe eleştirmek, sahici olmak'. Altta rekabette açık aykırılık, rakibe 'o uyumsuz' kozunu bedavaya verir; aynı fikri taşıyan ama sessiz kalan rakip, senin önüne geçer.",
+kritik:"Kültürel eleştirilerini açık ve sürekli dile getirmeye başladığın an. Murat o an susmayı seçerek seni geçti.",
+simdi:`Eleştirilerini içinde tut, dışta makul ölçüde uyumlu görün. Değiştirmek istediğin şeyi, pozisyon kazandıktan sonra 'içeriden' değiştir. Rakibine 'uyumsuz' kozunu verme — düşünceni koru, davranışını ortama ayarla.`},
+{n:39,t:"Balığı yakalamak için suyu bulandır",c:["atak"],o:"Sakin bir rakip okunamaz; onu dengesizleştirirsen hatasını görürsün.",
+senaryo:`Murat soğukkanlı bir rakip — toplantıda hep ölçülü, hep kontrollü, asla açık vermiyor. Onu okuyamıyorsun. Bir gün, önemli bir karar toplantısında, sakin ama beklenmedik bir soru sordun: "Murat, bu yaklaşımın geçen seneki başarısızlıkla benzer yanları yok mu?" Soru sertti ama sakin tonluydu. Murat bir an bozuldu — savunmaya geçti, gereğinden fazla açıkladı, telaşlandı. O telaş anında bir-iki şey söyledi ki normalde söylemezdi. Sular bulanınca, sakin Murat'ın gerçek pozisyonu göründü.`,
+yasalar:"Yasa 39 ana. Yasa 33 — suyu bulandırmak ancak rakibin zayıf noktasını biliyorsan işe yarar; rastgele kışkırtma geri teper.",
+yuzey:"Yüzeyde 'meşru, eleştirel bir soru'. Altta okunamayan rakibi kontrollü biçimde dengesizleştirmek; telaş anında herkes gerçek pozisyonunu ele verir.",
+kritik:"Yok — soru sakin tonla ve meşru zeminde sorulduğu için işe yaradı. Hata olsaydı: kaba ve kişisel bir kışkırtma yapıp kendini saldırgan göstermek olurdu.",
+simdi:`Okuyamadığın bir rakibi, meşru bir soruyla, sakin bir tonla dengesizleştir. Telaşlandığında ne söylediğini izle — gerçek pozisyonu orada açığa çıkar. Ama bunu nadiren ve hep meşru zeminde yap.`},
+{n:40,t:"Bedavayı küçümse",c:["savunma"],o:"Rakibin sana sunduğu 'iyilik', genelde bir bağ kurma hamlesidir.",
+senaryo:`Terfi yarışının ortasında Murat sana beklenmedik bir 'iyilik' yaptı: yoğun olduğun bir dönemde "ben senin şu raporunu da toparlayıvereyim, dert etme" dedi. Sen minnettar kaldın, kabul ettin. Üç hafta sonra Murat o iyiliği kullandı: ortak bir toplantıda "Berk'le biz birbirimize destek oluyoruz zaten, ben onun raporlarına da bakıyorum" dedi. Bir cümleyle hem seni 'desteğe muhtaç' gösterdi, hem kendini 'senin de işini yapan üst akıl' konumuna koydu. Bedava iyilik, terfi yarışında bir konumlama hamlesiydi.`,
+yasalar:"Yasa 40 ana. Yasa 7 — Murat sana yardım kılığında, sonradan senin emeğine ortak çıkmanın zeminini hazırladı.",
+yuzey:"Yüzeyde 'rakipler arası centilmence dayanışma'. Altta iç rekabette rakibin sana ettiği iyilik, çoğu zaman onun seni borçlandırma ya da senin üstünde konumlanma hamlesidir.",
+kritik:"Murat'ın yardım teklifini sorgusuz kabul ettiğin an. 'Neden şimdi, neden o, karşılığında ne?' diye düşünmedin.",
+simdi:`Rakipten gelen iyiliği şüpheyle karşıla. Gerçekten gereksiz bir destekse nazikçe reddet: ${Q("Sağ ol, ben hallederim, sende de yük var.")}İç rekabette rakibinle aranda 'borç' bağı oluşmasına izin verme.`},
+{n:41,t:"Büyük adamın ayakkabılarına basma",c:["savunma"],o:"Güçlü bir selefin ya da figürün gölgesinde, rakibin seni 'kötü kopya' diye çerçeveler.",
+senaryo:`Senden önce o pozisyonda efsane bir isim vardı — Cengiz Bey, herkes onu sevip sayardı. Sen pozisyona geldin ve doğal olarak onun tarzını sürdürdün, ona benzemeye çalıştın. Rakibin Murat bunu fırsata çevirdi: her toplantıda "Cengiz Bey olsa şöyle yapardı", "Sinan elinden geleni yapıyor tabii ama o ayrı bir ekoldü" diye konuştu. Sen sürekli bir hayaletle kıyaslandın. Murat seni yenmedi — Cengiz'in hayaletini senin sırtına bağladı, sen onunla yarışırken yoruldun.`,
+yasalar:"Yasa 41 ana. Yasa 25 — selefin gölgesinden çıkmanın tek yolu kendini belirgin biçimde yeniden tanımlamak.",
+yuzey:"Yüzeyde 'saygıdeğer bir geleneği sürdürmek'. Altta rakip, güçlü selefi senin aleyhine bir ölçüt olarak kullanıyor; sen o gölgenin altında kaldıkça hep 'eksik kopya' kalırsın.",
+kritik:"Pozisyona gelir gelmez Cengiz'in tarzını sürdürmeyi seçtiğin an. Murat'a kıyas malzemesini sen verdin.",
+simdi:`Selefin tarzından belirgin biçimde ayrış — kendi yöntemini, kendi ritüellerini kur, görünür biçimde 'yeni dönem' işareti ver. Murat 'Cengiz olsa' dediğinde, kıyaslanacak bir benzerlik kalmasın. Gölgeden çıkmanın yolu, başka bir şey olmaktır.`},
+{n:42,t:"Çobanı vur, sürü dağılır",c:["atak"],o:"Sana karşı bir rakip bloğu varsa, bloğun lideri çözülünce blok çözülür.",
+senaryo:`Sana karşı bir 'rakip kümesi' oluşmuştu — Murat ve onun etrafındaki üç-dört kişi, toplantılarda senin önerilerine topluca soğuk bakıyor, bir blok gibi davranıyorlardı. Sen blokla bütün olarak savaşmaya çalıştın, yorulu. Sonra fark ettin: blok aslında Murat'tı; diğerleri onun tonunu takip ediyordu. Stratejini değiştirdin — bloğun tamamıyla değil, sadece Murat'la ilgilenmeye başladın. Murat'ın etkisini bir-iki turda kendi sonuçlarınla zayıflattığında, etrafındaki üç kişi sessizce normalleşti. Blok değil, bir kişi vardı.`,
+yasalar:"Yasa 42 ana. Yasa 23 — kuvvetini bloğun tamamına yaymak yerine tek noktaya, lidere toplamak.",
+yuzey:"Yüzeyde 'bir grup insan sana karşı'. Altta grup nadiren gerçek bir gruptur; genelde bir lider ve onun yankılarıdır — lider etkisizleşince yankı susar.",
+kritik:"Bloğun tamamıyla aynı anda uğraşmaya çalıştığın dönem. Kuvvetini dağıttın, hiçbirinde sonuç alamadın.",
+simdi:`Sana karşı bir grup varsa, sesin kaynağını bul — genelde tek kişidir. Kuvvetini ona odakla, onu kendi sonuçlarınla etkisizleştir. Lider zayıflayınca takipçiler dağılır; grupla değil, çobanla uğraş.`},
+{n:43,t:"Kalpler ve akıllar üzerinde çalış",c:["iletisim"],o:"Rakip pozisyonla yönetmeye çalışırken, sen bağ kurarak kazan.",
+senaryo:`Sen ve Murat aynı ekibin liderliğine adaysınız ve ikiniz de ekibin desteğini istiyorsunuz. Murat yaklaşımını otorite üzerine kurdu — "ben lider olursam şöyle yapılacak" dilini kullandı, mesafeli ve resmi durdu. Sen farklı yaptın: ekipteki herkesle tek tek konuştun, ne istediklerini dinledin, küçük sorunlarını çözdün, onların dilinden konuştun. Karar anı geldiğinde Alihan ekibe danıştı — ekip Murat'ın 'yönetmesinden' değil, senin 'anlamandan' yanaydı. Murat akıllara hükmetmeye çalıştı; sen kalpleri kazandın.`,
+yasalar:"Yasa 43 ana. Yasa 27 — bağ kurmak, insanların ait olma ve değer görme ihtiyacını beslemek.",
+yuzey:"Yüzeyde 'Murat daha otoriter, daha lider duruşlu'. Altta rekabette destek, korkuyla ya da mesafeyle değil, gerçek bağla kazanılır; insanlar kendilerini anlayanın arkasında durur.",
+kritik:"Yok — senin yaklaşımın doğruydu. Murat'ın hatası: lideri henüz değilken lider gibi 'yönetmeye' çalışmak; otorite, bağ olmadan boşlukta kaldı.",
+simdi:`Ekibin desteğini istiyorsan, otoriteyle değil bağla kazan. Tek tek konuş, dinle, küçük sorunları çöz, onların dilinden konuş. Rakip 'yönetmeye' çalışırken sen 'anla' — karar anında ekip seni gösterir.`},
+{n:44,t:"Ayna etkisiyle silahsızlandır",c:["atak","savunma"],o:"Rakibin saldırı tonunu ona aynalarsan, onu kendi yöntemiyle durdurursun.",
+senaryo:`Murat toplantılarda sana karşı sürekli pasif-agresif bir taktik kullanıyordu: senin önerini överek başlıyor, sonra ince bir 'ama' ile altını oyuyordu. "Onur'un fikri güzel, ama acaba sahayı yeterince biliyor mu, emin değilim." Sen hep içerikle savunmaya geçiyordun, işe yaramıyordu. Bir gün aynısını yaptın — aynı yapı, aynı sakin ton: "Murat'ın yaklaşımı da değerli, ama acaba geçen çeyrekteki sonuçlarla ne kadar tutarlı, onu merak ediyorum." Murat aniden savunmaya geçti. Kendi silahını karşısında görünce, o silahı bıraktı.`,
+yasalar:"Yasa 44 ana. Yasa 22 — sürekli içerikle savunmaya geçmek, farkında olmadan teslim olma sinyali veriyordu; aynalama o sinyali kırdı.",
+yuzey:"Yüzeyde 'rakibin üslubuna karşı sakin ve içerikli kalmak'. Altta rakibin pasif-agresif yöntemi ancak tek taraflı işlerken güçlü; ona aynalandığında, kendi yönteminin rahatsızlığını ilk o hisseder.",
+kritik:"Murat'ın 'öv-ama-oy' kalıbına sürekli düz savunmayla karşılık verdiğin dönem. Bu, kalıbı kıramadı, sadece besledi.",
+simdi:`Rakibin pasif-agresif bir kalıbı varsa, onu bir kez ona aynala — aynı yapı, aynı sakin ton. Kendi yöntemini karşısında görmek onu durdurur. Bunu sürekli değil, kalıbı kırmak için bir-iki kez kullan.`},
+{n:45,t:"Değişim ihtiyacını vaaz et, ama yavaş reform yap",c:["iletisim","atak"],o:"Bir pozisyonu rakipten kapınca, hızlı değişim ekibi rakibinin yanına iter.",
+senaryo:`Bir ekip liderliğini Murat'ın elinden kaptın. Heyecanlıydın, hemen değiştirmek istedin — ilk hafta Murat döneminin süreçlerini, toplantı düzenini, raporlama biçimini topluca değiştirdin. Ekip direndi; Murat'ın bıraktığı alışkanlıklar konforluydu ve sen onları bir çırpıda sildin. Ekipte 'Murat zamanı daha iyiydi' fısıltısı başladı — farkında olmadan rakibini, gidişinden sonra bile güçlendirdin. Selin benzer bir devralmada üç ay hiçbir şeye dokunmamış, sonra yavaşça değiştirmişti; onun ekibi hiç direnmemişti.`,
+yasalar:"Yasa 45 ana. Yasa 41 — selefin gölgesini hızlı değişimle güçlendirmek; ani reform, eski döneme nostalji üretir.",
+yuzey:"Yüzeyde 'yeni lider olarak hızlıca kendi düzenini kurmak'. Altta rakipten devralınan bir yapıyı aniden değiştirmek, ekibi konfor kaybıyla rakibinin anısının yanına iter.",
+kritik:"İlk hafta Murat döneminin yapısını topluca değiştirdiğin an. Değişimi vaat etmeliydin ama uygulamayı aylara yaymalıydın.",
+simdi:`Rakipten bir yapı devraldığında, ilk aylar gözle ve dokunma. Değişimi anlat ama yavaş uygula. Ekip yeni düzene ısınsın ki rakibinin dönemini özlemesin — ani reform, gitmiş rakibi geri çağırır.`},
+{n:46,t:"Asla fazla mükemmel görünme",c:["savunma","algi"],o:"Rakibinden her açıdan üstün görünmek, ekibi ve rakibi sana karşı birleştirir.",
+senaryo:`Sen Murat'tan neredeyse her ölçülebilir konuda öndeydin ve bunu hiç saklamadın — her toplantıda bir adım öne çıktın, her metrikte üstünlüğünü belli ettin, hata yapmadın, yorulmadın. Sonuç beklediğinden farklı oldu: ekip Murat'a sempati duymaya başladı, çünkü Murat 'insandı' ve sen 'çok fazla'ydın. Murat bu sempatiyi kullandı — kendini 'ezilen, çabalayan' taraf olarak konumladı. Senin kusursuzluğun, ona bedava bir mağduriyet kozu verdi.`,
+yasalar:"Yasa 46 ana. Yasa 47 — her turda üstünlüğü göstermek, zaferde durmayı bilmemenin bir biçimi; fazlası sempatiyi rakibe taşır.",
+yuzey:"Yüzeyde 'üstünlüğünü dürüstçe ve açıkça ortaya koymak'. Altta rekabette ezici ve kusursuz görünmek, izleyenleri rakibinin yanına iter; mükemmellik, mağduriyet kozu üretir.",
+kritik:"Üstünlüğünü her fırsatta, her metrikte görünür kıldığın süreç. Birkaç turda öne çıkmak yeterdi; her turda ezmek sempatiyi taşırdı.",
+simdi:`Üstünlüğünü ölçülü göster — her turda değil, önemli olanlarda. Ara sıra küçük bir insanilik, bir 'bu zordu' göster. Rakibine mağduriyet kozu verme; kusursuzluk, izleyiciyi senden soğutur.`},
+{n:47,t:"Zaferinde nerede duracağını bil",c:["savunma"],o:"Rakibini yendikten sonra üstüne basmak, sana karşı sempati üretir.",
+senaryo:`Bir terfi yarışını Murat'a karşı kazandın. Temiz bir zaferdi. Ama orada durmadın — sonraki haftalarda toplantılarda Murat'ın eski itirazlarına göndermeler yaptın, "neyse ki o yol seçilmedi" gibi imalar bıraktın, zaferini hatırlatıp durdun. Murat sessizdi, ezilmişti — ve tam da bu yüzden ekip ona acımaya başladı. Üç ay sonra dengeler değişti: sen 'kazandığıyla yetinmeyen' biri, Murat 'haksızlığa uğramış gibi' biri olarak konuşuluyordu. Zaferi kazandın, ama sonrasını kaybettin.`,
+yasalar:"Yasa 47 ana. Yasa 36 — kazandığın tura geri dönüp durmak, sahip olduğun şeye gereğinden fazla ilgi göstermek.",
+yuzey:"Yüzeyde 'kazandığını pekiştirmek, üstünlüğü sağlamlaştırmak'. Altta zaferden sonra rakibin üstüne basmak, izleyenlerin sempatisini yenik tarafa kaydırır; zafer anında durmamak, zaferi geri verir.",
+kritik:"Yarışı kazandıktan sonra konuyu kapatmayıp Murat'a göndermeleri sürdürdüğün dönem. Zafer kazanıldığı an bitmeliydi.",
+simdi:`Bir turu kazandığında, orada dur. Rakibine gönderme yapma, zaferini hatırlatma, üstüne basma. Hatta zarif bir kapanış yap — kazandığın anı uzatma. Sempati, ezilen tarafa akar; sen ezilen olma.`},
+{n:48,t:"Şekilsizliği benimse",c:["savunma","algi"],o:"Rakip seni tek bir kalıba oturttuysa, kalıpsız kalarak hamlelerini boşa düşür.",
+senaryo:`Murat seni yıllar içinde tam olarak 'çözmüştü' — nasıl çalıştığını, hangi durumda ne yaptığını, neye nasıl tepki verdiğini biliyordu. Her rekabet turunda senden bir adım öndeydi çünkü seni bir kalıp olarak modellemişti. Sen bir şey fark ettin: tahmin edilebilirliğin onun en büyük silahıydı. Bilinçli olarak kalıpsızlaştın — bazen hızlı, bazen sabırlı; bazen sessiz, bazen görünür; tek bir alana demirlemedin, birden çok alanda esnek kaldın. Murat'ın senin için kurduğu model çalışmaz oldu. Çözülemeyen rakip, kuşatılamaz.`,
+yasalar:"Yasa 48 ana. Yasa 17 — şekilsizlik, öngörülemezliğin kalıcı ve yapısal hali; sadece bir hamleyi değil, tüm modelini bilinmez kılmak.",
+yuzey:"Yüzeyde 'tutarlı, istikrarlı bir karakter olmak'. Altta rekabette tahmin edilebilirlik, rakibe seni sürekli önceden engelleme imkânı verir; kalıpsız olan modellenemez, modellenemeyen kuşatılamaz.",
+kritik:"Yıllarca aynı kalıpta çalışıp Murat'a seni modelleme fırsatı verdiğin dönem. İstikrar bir erdemdi ama rekabette bir zafiyete dönüşmüştü.",
+simdi:`Rakibin seni bir kalıba oturttuysa, o kalıbı kır. Ritmini, tarzını, alanını bilinçli olarak değiştir — tahmin edilemez ol. Tek bir uzmanlığa demirleme, esnek kal. Çözülemeyen rakip, yarıştan önce yenilemez.`}
+];
+const ALL_SETS={
+  isyeri:LAWS,
+  rakip:RAKIP_LAWS.concat(RAKIP_LAWS_2)
+};
+let activeSet='isyeri';
 function renderLaws(){
   const q=document.getElementById('search').value.toLowerCase().trim();
   const filter=document.querySelector('.chip.active').dataset.filter;
   const list=document.getElementById('list');
   const counter=document.getElementById('counter');
   const empty=document.getElementById('empty');
+  const data=ALL_SETS[activeSet];
   const normalize=s=>s.toLowerCase().replace(/ı/g,'i').replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c');
   const qN=normalize(q);
   let visible=0;
-  const html=LAWS.map(l=>{
+  const html=data.map(l=>{
     const blob=normalize(`${l.t} ${l.o} ${l.senaryo} ${l.yasalar} ${l.yuzey} ${l.kritik} ${l.simdi}`);
     const matchSearch=!qN||blob.includes(qN);
     const matchFilter=filter==='all'||l.c.includes(filter);
@@ -460,6 +768,15 @@ function renderLaws(){
     h.addEventListener('click',()=>h.parentElement.classList.toggle('open'));
   });
 }
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    activeSet=t.dataset.set;
+    window.scrollTo({top:0,behavior:'smooth'});
+    renderLaws();
+  });
+});
 document.getElementById('search').addEventListener('input',e=>{
   document.getElementById('clear').classList.toggle('show',e.target.value.length>0);
   renderLaws();
